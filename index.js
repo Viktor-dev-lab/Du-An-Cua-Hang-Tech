@@ -6,6 +6,7 @@ const bodyParser = require('body-parser') // Thư viện lấy dữ liệu từ 
 const flash = require('express-flash') // Thư viện để thông báo một sự kiện
 const session = require('express-session') // Thư viện để thông báo một sự kiện
 const cookieParser = require('cookie-parser') // Thư viện để thông báo một sự kiện
+const cors = require("cors");
 
 database.connect() // gọi hàm connect để connect
 
@@ -27,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: false })) //user send data form HTML, 
 app.use(cookieParser('Xuandeptrai')); // sử dụng middleware cookieParser để phân tích và dùng chuỗi bí mật dùng để ký tên cookie trong các yêu cầu HTTP
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+
+app.use(cors());
 
 // route
 routeClient(app)
