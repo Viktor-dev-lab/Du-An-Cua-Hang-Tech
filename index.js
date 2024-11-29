@@ -7,6 +7,11 @@ const flash = require('express-flash') // Thư viện để thông báo một s�
 const session = require('express-session') // Thư viện để thông báo một sự kiện
 const cookieParser = require('cookie-parser') // Thư viện để thông báo một sự kiện
 const cors = require("cors");
+const corsConfig = {
+  origin: "*",
+  credential: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+};
 
 database.connect() // gọi hàm connect để connect
 
@@ -29,7 +34,7 @@ app.use(cookieParser('Xuandeptrai')); // sử dụng middleware cookieParser đ�
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
-app.use(cors());
+app.use(cors(corsConfig));
 
 // route
 routeClient(app)
