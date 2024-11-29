@@ -31,6 +31,7 @@ module.exports.product = async (req, res) => {
         find.title = objectSearch.title;
     }
 
+    // Phân Trang
     const countProducts = await Product.countDocuments(find); // Đếm tổng số sản phẩm
     // Chức năng phân trang
     let Pagination = paginationHelpers(
@@ -42,8 +43,17 @@ module.exports.product = async (req, res) => {
         countProducts
     );
 
+    // Sắp Xếp
+    let sort = {};
+    if (req.query.sortKey && req.query.sortValue){
+        sort[req.query.sortKey] = req.query.sortValue;
+
+    } else {
+        sort.position = "asc"
+    }
+
     const products = await Product.find(find)
-        .sort({position: "asc"})
+        .sort(sort)
         .limit(Pagination.limitPage)
         .skip(Pagination.skip);
 

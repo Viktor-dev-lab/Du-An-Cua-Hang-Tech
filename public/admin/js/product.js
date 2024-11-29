@@ -394,3 +394,45 @@ if (ButtonRestore) {
     }
 }
 
+// Sort
+const DivSort = document.querySelector("[sort]");
+if (DivSort){
+    let url = new URL(window.location.href); //- lấy url trên thanh tìm kiếm
+
+    const SortSelect = DivSort.querySelector("[sort-select");
+    const SortClear = DivSort.querySelector("[sort-clear]");
+
+    // Select
+    SortSelect.addEventListener("change", (e) => {
+        const ResultArray = e.target.value.split("-");
+        const [sortKey, sortValue] = ResultArray;
+
+        url.searchParams.set("sortKey", sortKey);
+        url.searchParams.set("sortValue", sortValue);
+
+        // gán url mới vào thanh tìm kiếm trên công cụ
+        window.location.href = url.href
+    });
+
+    // Button-Clear
+    SortClear.addEventListener("click", () => {
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+        // gán url mới vào thanh tìm kiếm trên công cụ
+        window.location.href = url.href
+    });
+
+    // Set Selected Select
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+
+    if (sortKey && sortValue){
+        const stringSort = `${sortKey}-${sortValue}`;
+        const option = SortSelect.querySelector(`option[value="${stringSort}"]`);
+        option.selected = true;
+    }
+}
+
+
+// End Sort
+
