@@ -1,0 +1,462 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+    --color-main: #369aff;
+    --bg: #fbfefd;
+    --bg2: #dce5ff;
+    --main-accent: #e9eefd;
+    --main-text: #4b5876;
+    --shadow: rgba(17, 17, 26, 0.1) 2px 2px 16px;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg2);
+    overflow-x: hidden;
+}
+
+/* TRANG DASHBOARD */
+#menu-toggle {
+    display: none;
+}
+
+#menu-toggle:checked ~ .sidebar {
+    left: -345px;
+}
+
+#menu-toggle:checked ~ .main-content {
+    margin-left: 20px;  /* Add left margin to avoid touching the left edge */
+    width: calc(100vw - 20px);  /* Adjust width to accommodate the left margin */
+}
+
+.sidebar {
+    width: 345px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 1rem 1.2rem;
+    z-index: 999;
+    transition: left 300ms;
+}
+
+.sidebar-container {
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 1.2rem;
+    overflow-y: auto;
+}
+
+/* Start Style scroll */
+/* width */
+.sidebar-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.sidebar-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.sidebar-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+/* End Style scroll */
+
+/* Start Avatar */
+img.avatar {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.sidebar-avatar {
+    display: grid;
+    grid-template-columns: 70px auto;
+    align-items: center;
+    border: 2px solid var(--main-accent);
+    padding: .5rem;
+    /* Add padding to the entire avatar container */
+    border-radius: 7px;
+    gap: 20px;
+    /* Add space between the image and the info */
+    margin: 2rem 0rem;
+}
+
+.sidebar-avatar .avatar-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Align items to the start */
+    gap: 20px;
+    /* Add space between text elements */
+}
+
+/* End Avatar */
+
+/* Start brand */
+
+.brand h2 span {
+    color: var(--color-main);
+    font-size: 1.8rem;
+    display: inline-block;
+}
+
+.brand .logo {
+    width: 80px;
+    /* Adjust logo size as needed */
+    margin-right: .2rem;
+    height: auto;
+}
+
+/* End brand */
+
+
+/* Start menu */
+
+.sidebar-menu li {
+    margin-bottom: .5rem;
+}
+
+.sidebar-menu a {
+    color: var(--main-text);
+    display: block;
+    padding: .7rem 0rem;
+    text-decoration: none; /* Loại bỏ gạch chân cho tất cả các liên kết */
+}
+
+.sidebar-menu a.active {
+    background: var(--main-accent);
+    border-radius: 7px;
+    padding: .7rem;
+}
+
+.sidebar-menu a span:first-child {
+    display: inline-block;
+    margin-right: .8rem;
+    font-size: 1.6rem;
+    color: var(--color-main);
+}
+
+/* End sidebar-menu */
+
+/* Start .sidebar-car */
+.sidebar-card {
+    background: var(--main-accent);
+    text-align: center;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    border: 1px solid var(--color-main);
+    box-shadow: var(--shadow);
+}
+
+.sidebar-card img.img_footer {
+    width: 100%;
+    /* Make the image take the full width of the container */
+    height: auto;
+    /* Maintain aspect ratio */
+    object-fit: cover;
+    /* Ensure the image covers the container without distortion */
+    margin-bottom: 1rem;
+    /* Add space below the image */
+}
+
+.sidebar-card h4 {
+    color: var(--color-main);
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-card p {
+    color: var(--main-text);
+    margin-bottom: 1rem;
+}
+
+.btn {
+    padding: .7rem 1rem;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-main {
+    background-color: var(--color-main);
+    color: #fff;
+}
+
+.btn-main:hover {
+    background-color: darken(var(--color-main), 10%);
+}
+
+/* End Sidebar Card */
+
+/* Start header */
+.main-content {
+    margin-left: 335px;
+    width: calc(100vw - 345px);
+    padding: 1rem 1.2rem;
+    padding-right: 2rem;
+    transition: margin-left 300ms;
+}
+
+.btn span {
+    font-size: 1.2rem;
+    display: inline-block;
+    margin-right: .7rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+}
+
+.header-title-wrapper {
+    display: flex;
+}
+
+.header-title-wrapper label{
+    display: inline-block;
+    color: var(--color-main);
+    margin-right: 2rem;
+    font-size: 1.8rem;
+}
+
+.header-title h1 {
+    color: var(--main-text);
+    font-weight: 600;
+}
+
+.header-title p {
+    color: #666;
+    font-size: .9rem;
+}
+
+.header-title p span {
+    color: red;
+    font-size: 1.2rem;
+    display: inline-block;
+    margin-left: .5rem;
+}
+
+.header-action button {
+    padding: .80rem 1.6rem;
+    font-size: 1rem;
+}
+
+/* End header */
+
+/* Start main dashboard */
+main {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+.analytics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 0rem 4rem;
+    margin-bottom: 3rem;
+    justify-content: center;
+}
+
+.analytic {
+    box-shadow: var(--shadow);
+    padding: 2rem; /* Increased padding for better spacing */
+    border-radius: 10px;
+    display: flex;
+    align-items: center; /* Center align items */
+}   
+
+.analytic-info h4 {
+    font-weight: 400;
+    color: #555;
+    font-size: .98rem;
+}
+
+.analytic-info h1{
+    color: var(--margin-text);
+    font-weight: 600;
+}
+
+.analytic-info h1 small{
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.text-danger {
+    color: red;
+}
+
+.text-success {
+    color: #2ec3a3;
+}
+
+.text-main {
+    color: var(--color-main);
+}
+
+.analytic:first-child .analytic-icon {
+    background: var(--main-accent);
+    color: #6883db;
+}
+
+.analytic:nth-child(2) .analytic-icon {
+    background: #ebf7f5;
+    color: red;
+}
+
+.analytic:nth-child(3) .analytic-icon {
+    background: #ebf7f5;
+    color: #2ec3a3;
+}
+
+.analytic:nth-child(4) .analytic-icon {
+    background: var(--main-accent);
+    color: var(--color-main);
+}
+
+.analytic-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin-right: .7rem;
+    font-size: 1.5rem;
+}
+
+.section-head{
+    font-size: 1.4rem;
+    color: var(--main-text);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.block-grid {
+    display: grid;
+    grid-template-columns: 30% auto;
+    grid-gap: 0rem 3rem;
+}
+
+.rev-content {
+    background: #fff;
+    box-shadow: var(--shadow);
+    border-radius: 15px;
+    padding: 3rem;
+    text-align: center;
+}
+
+.rev-content img.avatar{
+    width: 180px;
+    margin-bottom: 1.5rem 0rem;
+}
+
+.rev-info {
+    margin-bottom: 1rem;
+}
+
+.rev-info h3 {
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    color: black;
+}
+
+.rev-info h1 {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 1rem;
+}
+
+.rev-sum {
+    background: var(--main-accent);
+    border: 1px solid var(--color-main);
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.rev-sum h4 {
+    color: #555;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+}
+
+.rev-sum h2 {
+    margin-bottom: 0;
+    font-weight: 600;
+    color: var(--main-text);
+}
+
+.graph-content {
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    background: #fff;
+}
+
+.graph-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icons-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    height: 40px;
+    width: 40px; 
+    border-radius: 7px;
+    background: #ebf7f5;
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.graph-content {
+    height: 464px;
+}
+
+.graph-head select {
+    background: #eee;
+    border-radius: 10px;
+    height: 35px;
+    padding: .5rem 2rem;
+    border: none;
+    outline: none;
+}
+
+
+
+

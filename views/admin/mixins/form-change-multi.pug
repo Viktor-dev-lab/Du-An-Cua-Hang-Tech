@@ -1,0 +1,28 @@
+mixin form-change-multi(path)
+    form(
+        action= path
+        method="POST"
+        form-change-multi
+    )
+        .d-flex.align-items-center.mb-3
+            .form-group.flex-grow-1.mr-2
+                select(name="type" class="form-control" style="height: 38px; width: 310px" )
+                    option(disabled selected) Chọn hành động
+                    option(value="active") Hoạt động
+                    option(value="inactive") Dừng hoạt động
+                    option(value="delete-all") Xóa tất cả
+                    option(value="change-position") Thay đổi vị trí
+            .form-group.flex-grow-1.mr-2
+                input(
+                    type="text"
+                    name="ids"
+                    value=""
+                    class="form-control"
+                    placeholder="Nhập ID sản phẩm"
+                    style="height: 38px; width: 320px"
+                )
+            button(
+                type="submit" 
+                class="btn btn-outline-primary" 
+                style="height: 50px; border: 2px solid #007bff;" 
+            ) Áp dụng

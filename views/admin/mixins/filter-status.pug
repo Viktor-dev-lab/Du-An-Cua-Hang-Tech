@@ -1,0 +1,7 @@
+mixin filter-status(filtersStatus)
+    each item in filterStatus 
+        button(
+            class = `btn btn-sm ms-2 btn-outline-success ${item.class} custom-button`
+            button-status=item.status
+            style="margin: 0.5rem;"
+        ) #{item.name}

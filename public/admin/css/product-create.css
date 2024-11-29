@@ -1,0 +1,172 @@
+/* Trang tạo mới sản phẩm [GET] admin/products/create  */
+
+/* Form group spacing and label styling */
+.form-create-product .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label style */
+.form-create-product .form-group label {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
+/* Input and Textarea style */
+.form-create-product .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus effect for inputs */
+.form-create-product .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+/* Textarea specific styling */
+.form-create-product textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Radio buttons style */
+.form-create-product .form-check-inline {
+    margin-right: 20px;
+}
+
+.form-create-product .form-check-input {
+    margin-right: 10px;
+    accent-color: #007bff;
+}
+
+.form-create-product .form-check-label {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Button style */
+.form-create-product .btn {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+/* Hover and active effects for button */
+.form-create-product .btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+.form-create-product .btn:active {
+    background-color: #003d80;
+    transform: translateY(1px);
+}
+
+/* Card header customization */
+.card-header {
+    color: #0272f1;
+    font-size: 22px;
+    text-align: center;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+    background-color:rgba(129, 145, 233, 0.1)
+}
+
+/* Card body */
+.card-body {
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Table customization */
+.custom-table th, .custom-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.custom-table th {
+    background-color: #f1f1f1;
+    font-weight: 600;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Checkbox customization */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0 10px;
+}
+
+/* Button Delete Image */
+
+/* Căn giữa ảnh xem trước */
+/* Đảm bảo rằng ảnh được căn chỉnh giữa khi hiển thị */
+[upload-image-preview] {
+    width: 350px; /* Giới hạn kích thước của ảnh xem trước */
+    height: auto;
+    display: block;
+    margin-left: 30px; /* Căn giữa ảnh */
+    margin-top: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border:1px solid #ddd;
+    padding: 15px;
+}
+
+/* Điều chỉnh nút xóa */
+#removeButton {
+    position: absolute;
+    margin-top: 5px; /* Đặt trên ảnh một chút */
+    right: -10px; /* Đặt cách ảnh để không đè lên */
+    z-index: 2;
+    background-color: #ff4c4c;
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#removeButton i {
+    font-size: 12px;
+}
+
+#removeButton:hover {
+    background-color: #d9534f;
+}
+
+
+/* Không căn giữa thanh chọn file */
+.form-group {
+    text-align: left; /* Giữ thanh chọn file ở lề trái */
+}
+
+/* Button Delete Image */

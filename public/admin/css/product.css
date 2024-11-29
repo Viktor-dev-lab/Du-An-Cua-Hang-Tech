@@ -1,0 +1,173 @@
+/* TRANG SẢN PHẨM */
+
+
+/* TABLE PRODUCT */
+/* Đặt chiều cao cho mỗi hàng */
+/* Đặt chiều cao cố định cho mỗi hàng */
+.table tbody tr {
+    height: 100px;
+    /* Điều chỉnh chiều cao hàng theo yêu cầu */
+}
+
+/* Đảm bảo các ô trong hàng có cùng chiều cao */
+.table td,
+.table th {
+    vertical-align: middle;
+    /* Đảm bảo nội dung trong ô căn giữa theo chiều dọc */
+    padding: 0.75rem;
+    /* Điều chỉnh padding */
+    border: 1px solid #ddd;
+    /* Thêm đường viền cho các ô nếu cần */
+    box-sizing: border-box;
+    /* Đảm bảo padding và border không ảnh hưởng đến kích thước */
+}
+
+/* Định dạng cho hình ảnh để không làm thay đổi chiều cao hàng */
+.table img {
+    max-height: 100px;
+    /* Đặt chiều cao tối đa cho hình ảnh để tránh làm tăng chiều cao hàng */
+    object-fit: contain;
+    /* Đảm bảo hình ảnh giữ tỷ lệ và không làm thay đổi kích thước */
+}
+
+/* Định dạng cho phần trạng thái */
+.status-badge {
+    font-size: 1rem;
+    /* Kích thước chữ */
+    padding: 0.5rem 1rem;
+    /* Padding cho phần trạng thái */
+    border-radius: 0.25rem;
+    /* Bo tròn góc */
+}
+
+/* Định dạng cho các nút hành động */
+.d-flex {
+    display: flex;
+    gap: 0.5rem;
+    /* Khoảng cách giữa các nút */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    /* Kích thước chữ lớn */
+    font-weight: bold;
+    /* Chữ đậm */
+    color: #007bff;
+    /* Màu chữ */
+}
+
+/* TABLE PRODUCT */
+
+
+/* TABLE FUCTION*/
+button.btn {
+    flex: 0 0 auto;
+
+}
+
+/* CSS cho các nút để chữ to và đậm hơn */
+.custom-button {
+    font-size: 1.1rem;
+    /* Điều chỉnh kích thước chữ */
+    font-weight: bold;
+    /* Chữ đậm */
+}
+
+.btn-warning:hover {
+    background-color: #989b0e;
+    /* Màu nền khi hover */
+    transform: scale(1.15);
+    /* Phóng to nhẹ khi hover */
+}
+
+.btn-danger:hover {
+    background-color: #b13010;
+    /* Màu nền khi hover */
+    transform: scale(1.15);
+    /* Phóng to nhẹ khi hover */
+}
+
+.bg-warning:hover {
+    background-color: #989b0e;
+    /* Màu nền khi hover */
+    transform: scale(1.05);
+    /* Phóng to nhẹ khi hover */
+}
+
+.bg-success:hover {
+    background-color: #10b140;
+    /* Màu nền khi hover */
+    transform: scale(1.05);
+    /* Phóng to nhẹ khi hover */
+}
+
+/* Phần thông báo */
+[show-alert] {
+    position: fixed;
+    top: -100px;
+    right: 15px;
+    z-index: 999;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+[show-alert].alert-visible {
+    top: 70px;
+    opacity: 1;
+    animation: slide-down 0.5s ease-in-out forwards;
+}
+
+[show-alert].alert-hidden {
+    top: -100px;
+    opacity: 0;
+    animation: slide-up 0.5s ease-in-out forwards;
+}
+
+@keyframes slide-down {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+
+    to {
+        top: 70px;
+        opacity: 1;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        top: 70px;
+        opacity: 1;
+    }
+
+    to {
+        top: -100px;
+        opacity: 0;
+    }
+}
+
+[show-alert] [close-alert] {
+    background: #fff;
+    color: #000;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+[show-alert] [close-alert]:hover {
+    background: #f00;
+    color: #fff;
+}
+
+/* Phần thông báo */
+
+
+

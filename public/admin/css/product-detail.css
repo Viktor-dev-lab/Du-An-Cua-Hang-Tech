@@ -1,0 +1,133 @@
+/* Reset and Global Styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    background: #C1908B;
+  }
+  
+  /* Container and Layout */
+  .container {
+    max-width: 75%;
+    margin: 5% auto;
+    height: auto;
+    background: white;
+    box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-wrap: wrap; /* Support responsive layout */
+  }
+  
+  .left, .right {
+    width: 50%;
+    padding: 30px;
+  }
+  
+  .flex {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  
+  /* Main Image */
+  .main_image {
+    width: 416px; /* Kích thước khung cha */
+    height: 550px;
+    overflow: hidden; /* Ẩn phần dư nếu có */
+    text-align: center;
+
+    /* Sử dụng Flexbox để căn giữa ảnh */
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+  }
+  
+  
+  .main_image img.slide {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover; /* Đảm bảo ảnh luôn vừa khung */
+  }
+  
+  /* Image Options */
+  .option img {
+    width: 75px;
+    height: 75px;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .option img:hover {
+    transform: scale(1.1);
+  }
+
+  
+  /* Right Section Styles */
+  .right {
+    padding: 50px 100px 50px 50px;
+  }
+  
+  h3 {
+    color: #af827d;
+    margin: 20px 0;
+    font-size: 25px;
+  }
+  
+  h4 {
+    color: red;
+  }
+  
+  p {
+    margin: 20px 0 30px;
+    line-height: 25px;
+    color: #837D7C;
+  }
+  
+  h5 {
+    font-size: 15px;
+    margin: 15px 0;
+    color: #837D7C;
+  }
+  
+  .color span {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin: 0 10px;
+    display: inline-block;
+  }
+  
+  
+  .button {
+    display: inline-flex; /* Dùng flex để căn giữa nội dung */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    padding: 10px 20px; /* Thêm khoảng cách trong nút */
+    background-color: #4CAF50; /* Màu nền */
+    color: white; /* Màu chữ */
+    text-decoration: none; /* Bỏ gạch chân */
+    border-radius: 5px; /* Bo góc */
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng khi hover */
+    margin-top: 10%;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #45a049; /* Màu nền khi hover */
+  }
+  
+  .badge-success {
+    background-color: #28a745; /* Màu nền xanh */
+    color: #fff; /* Màu chữ trắng */
+  }
+  
+  .badge-danger {
+    background-color: #dc3545; /* Màu nền đỏ */
+    color: #fff; /* Màu chữ trắng */
+  }

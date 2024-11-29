@@ -1,0 +1,27 @@
+mixin form-restore(path)
+    form(
+        action= path
+        method="POST"
+        form-restore
+        class="d-flex align-items-center"
+    )
+        .form-group.flex-grow-1.mr-2
+            select(name="type" class="form-control" style="height: 40px; width: 300px")
+                option(disabled selected) Chọn hành động
+                option(value="restore") Phục Hồi
+                option(value="delete-all") Xoá Tất Cả
+
+        .form-group.flex-grow-1.mr-2
+            input(
+                type="text"
+                name="ids"
+                value=""
+                class="form-control"
+                placeholder="Nhập ID sản phẩm"
+                style="height: 40px; display: none" 
+            )
+        button(
+            type="submit" 
+            class="btn btn-primary" 
+            style="height: 40px;" 
+        ) Áp dụng

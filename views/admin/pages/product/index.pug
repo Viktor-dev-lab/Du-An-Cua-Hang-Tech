@@ -1,0 +1,155 @@
+extends ../../layout/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/table-product.pug
+include ../../mixins/form-change-multi.pug
+include ../../mixins/table_item.pug
+include ../../mixins/alert.pug
+
+block header
+    link(rel="stylesheet", href=" ../../../admin/css/product.css")
+
+block main
+    .main-content
+        include ../../partials/header.pug
+        main
+            +alert-success(5000)
+
+            h1 Trang Sản Phẩm <br><br>
+
+            .card.mb-5
+                .card-header(style="--bs-card-cap-padding-y: 1rem; display: flex; align-items: center; justify-content: center;")
+                    span.card-title Bộ lọc và Tìm Kiếm
+                .card-body.d-flex.justify-content-between.align-items-center
+                    .d-flex.flex-wrap
+                       +filter-status(filterStatus)
+                    +search(keyword)
+        
+
+            .card.mb-5(style="--bs-card-spacer-y: 3rem; --bs-card-spacer-x: 3rem;")
+                .card-header(style=" --bs-card-cap-padding-y: 2rem; display: flex; align-items: center; justify-content: center;")
+                    span.card-title Danh Sách Sản Phẩm
+                .card-body
+                    .d-flex
+                        // Gọi mixin form-change-multi bên trong div
+                        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+
+                        // Nút phục hồi nằm ngoài form, bên cạnh div d-flex
+                        a(
+                            href=`${prefixAdmin}/products/restore`
+                            type="button" 
+                            class="btn btn-outline-secondary" 
+                            style="height: 50px; border: 2px solid #6c757d;" 
+                            restore
+                        ) Phục hồi
+
+                        a(
+                            href=`${prefixAdmin}/products/create`
+                            class="btn btn-outline-success"
+                            style="height: 50px; border: 2px solid #28a745;" 
+                        ) + Thêm mới
+
+
+
+                    table(class="table table-hover table-sm align-middle custom-table" checkbox-multi)
+                        thead.table-light.custom-thead
+                            tr
+                                th
+                                    input(type="checkbox" name="checkall")
+                                th STT
+                                th Hình Ảnh
+                                th Tiêu Đề
+                                th Giá
+                                th Sắp Xếp
+                                th Trạng Thái
+                                th Hành Động
+                        
+                        tbody
+                            each item, index in products
+                                tr
+                                    td
+                                        input(
+                                            type="checkbox"
+                                            name="id"
+                                            value=item.id
+                                        )
+                                    td #{index + 1}
+                                    td
+                                        img(
+                                            src=item.thumbnail, 
+                                            alt=`Sản phẩm ${index + 1}`, 
+                                            class="img-thumbnail"
+                                        )
+                                    td #{item.title}
+                                    td #{item.price}$
+                                    td 
+                                        form(
+                                            action=`${prefixAdmin}/products/change-multi?_method=PATCH`
+                                            method="POST"
+                                        )
+                                            input(
+                                                type="number"
+                                                value=item.position
+                                                min="1"
+                                                name="position"
+                                            )
+                                    td
+                                        if item.status == "active"
+                                            a(
+                                                // khônglinksangtrangkhác
+                                                href= "javascript:;" 
+                                                data-status = item.status
+                                                data-id = item.id
+                                                button-change-status
+                                                class="badge bg-success text-white status-badge"
+                                                style="text-decoration: none;" 
+                                             )  Hoạt Động
+
+                                        else
+                                            a(
+                                                href= "javascript:;"
+                                                data-status = item.status
+                                                data-id = item.id
+                                                button-change-status
+                                                class="badge bg-warning text-dark status-badge"
+                                                style="text-decoration: none;" 
+                                            )   Dừng Hoạt Động
+
+                                    td
+                                        .d-flex
+                                            a(
+                                                href = `${prefixAdmin}/products/detail/${item.id}`
+                                                type="button"
+                                                class="btn btn-secondary btn-sm me-2"
+                                            ) Chi Tiết
+                                            a(
+                                                href = `${prefixAdmin}/products/edit/${item.id}`
+                                                type="button"
+                                                class="btn btn-warning btn-sm me-2"
+                                            ) Sửa
+                                            button(
+                                                type="button"
+                                                class="btn btn-danger btn-sm"
+                                                button-delete
+                                                data-id=item.id
+                                            ) Xóa
+
+            +pagination(pagination)
+
+            form(
+                action=""
+                method="POST"
+                id="form-change-status"
+                data-path=`${prefixAdmin}/products/change-status`
+            )
+            
+            form(
+                action=""
+                method="POST"
+                id="form-delete-item"
+                data-path=`${prefixAdmin}/products/delete`
+            )
+
+    // product
+    script(src = '/admin/js/product.js')

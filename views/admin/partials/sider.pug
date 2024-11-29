@@ -1,0 +1,50 @@
+input(type="checkbox" name = "" id="menu-toggle")
+.sidebar
+    .sidebar-container
+        .brand
+            h2
+                img.logo(src="/admin/images/logo.jpg", alt="logo")
+                span Happy Code
+        .sidebar-avatar
+            img.avatar(src="/admin/images/user_admin.jpg", alt="Avatar")
+            .avatar-info
+                .avatar-text
+                    h4 Xuan Le
+                    small 0399984586
+                span.las.la-angle-double-down
+        
+        nav.sidebar-menu
+            ul
+                li
+                     a(href = `${prefixAdmin}/dashboard`) 
+                        span.las.la-adjust
+                        span Dashboard 
+                li
+                     a(href = `${prefixAdmin}/video`) 
+                        span.las.la-video
+                        span video
+                li
+                     a(href = `${prefixAdmin}/Anlytics`) 
+                        span.las.la-chart-bar
+                        span Analytics
+                li
+                     a(href = `${prefixAdmin}/Schedule`) 
+                        span.las.la-calendar
+                        span Schedule
+                li
+                     a(href = `${prefixAdmin}/Account`) 
+                        span.las.la-user
+                        span Account
+                li
+                     a(href = `${prefixAdmin}/products`) 
+                        span.las.la-archive
+                        span Product
+        .sidebar-card
+            img.img_footer(src="/admin/images/img_footer.png", alt="Avatar")
+            div
+                h4 Make AdSense
+                p Add ads to your videos to earn money
+            button(class= "btn btn-main btn-block") Create now
+
+    // product
+    script(src = '/admin/js/dashboard.js')

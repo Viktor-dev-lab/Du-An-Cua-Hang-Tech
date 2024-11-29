@@ -1,0 +1,68 @@
+extends ../../layouts/default.pug
+
+block header
+  link(rel="stylesheet", href="/css/product-detail.css")
+
+block main
+  .product-detail
+    section
+    .container.flex
+      .left
+        .main_image
+          img.slide(src=product.images[0] alt=product.title)
+        .option.flex
+          if product.images && product.images.length > 0
+            each image in product.images
+              img(src=image alt="Option Image" onclick=`img('${image}')`)
+      .right
+        h3= product.title
+        h4
+          small $
+          if product.price
+            | #{product.price}
+        if product.description
+          p= product.description
+        h5 Color Options
+        .color.flex1
+          span(style="background: #000;")
+          span(style="background: #EDEDED;")
+          span(style="background: #D5D6D8;")
+          span(style="background: #EFE0DE;")
+          span(style="background: #AB8ED1;")
+          span(style="background: #F04D44;")
+        if product.Quantity
+          h5 
+            small Quantity: 
+            | #{product.stock}
+        if product.discountPercentage
+          h5 
+            small Discount: 
+            | #{product.discountPercentage}%
+        if product.rating
+          h5
+            small Rating: 
+            | #{product.rating} / 5
+        if product.status
+          h5
+            small Status: 
+            if product.status === "active"
+              span(class="badge badge-success") Hoạt Động
+            else
+              span(class="badge badge-danger") Dừng Hoạt Động
+        if product.updateAt
+          h5
+            small Updated At: 
+            | #{new Date(product.updatedAt).toLocaleString()}
+        if product.brand
+          h5
+            small Brand: 
+            | #{product.brand}
+        if product.category
+          h5
+            small Category: 
+            | #{product.category}
+
+    script.
+      function img(anything) {
+        document.querySelector('.slide').src = anything;
+      }
