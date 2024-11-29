@@ -34,6 +34,7 @@ app.use(cookieParser('Xuandeptrai')); // sử dụng middleware cookieParser đ�
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
+app.options("",cors(corsConfig));
 app.use(cors(corsConfig));
 
 // route
