@@ -1,11 +1,11 @@
 const express = require('express') // thêm thư viện express
 const router = express.Router()
 const controller = require('../../controllers/admin/product.controller')
+const uploadClound = require('../../middlewares/admin/uploadClound.middleware.js')
 
 // Upload Image
 const multer = require('multer');
-const storageMulter = require('../../helpers/storageMulter');
-const upload = multer({ storage: storageMulter()})
+const fileUpload  = multer();
 
 // Validate
 const validate = require('../../validates/product.validate.js');
@@ -24,7 +24,8 @@ router.delete("/delete/temporarily/:id", controller.changeDeleteTemporarily)
 router.get('/create', controller.create)
 router.post(
     '/create', 
-    upload.single('thumbnail'), 
+    fileUpload.single('thumbnail'),
+    uploadClound.upload,
     validate.createPost,
     controller.createPost
 );
@@ -32,7 +33,8 @@ router.post(
 router.get("/edit/:id", controller.edit)
 router.patch(
     "/edit/:id",
-    upload.single('thumbnail'), 
+    fileUpload.single('thumbnail'),
+    uploadClound.upload,
     validate.createPost,
     controller.editPatch
 )
