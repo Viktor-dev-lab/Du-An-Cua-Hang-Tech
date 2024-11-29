@@ -10,8 +10,6 @@ const filterStatusHelpers = require("../../helpers/filterStatus.js");
 const searchHelpers = require("../../helpers/search.js");
 const paginationHelpers = require("../../helpers/pagination.js");
 
-// DDOS
-const geoip = require('geoip-lite');
 // [GET] admin/products
 module.exports.product = async (req, res) => {
     // Start bộ lọc
@@ -43,16 +41,6 @@ module.exports.product = async (req, res) => {
         req,
         countProducts
     );
-
-    const userIp = req.ip;
-    console.log(userIp);
-    const geo = geoip.lookup(userIp);
-    
-    if (geo) {
-        console.log(`User Location: ${geo.city}, ${geo.country}`);
-    } else {
-        console.log('Unable to determine location');
-    }
 
     const products = await Product.find(find)
         .sort({position: "asc"})

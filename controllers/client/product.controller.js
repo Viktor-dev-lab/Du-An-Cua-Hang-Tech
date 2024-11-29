@@ -1,5 +1,4 @@
 const Product = require("../../models/product.model.js")
-const geoip = require('geoip-lite');
 
 // [GET] /products
 module.exports.index = async (req, res) => {
@@ -9,15 +8,7 @@ module.exports.index = async (req, res) => {
     }).sort({position: "asc"});
 
     const ip = req.ip || req.connection.remoteAddress; 
-    const geo = geoip.lookup(ip);
-
-    if (geo) {
-        console.log(`IP: ${ip}`);
-        console.log(`Location: ${geo.city}, ${geo.region}, ${geo.country}`);
-        console.log(`Coordinates: Latitude ${geo.ll[0]}, Longitude ${geo.ll[1]}`);
-    } else {
-        console.log(`IP: ${ip} - Location not found`);
-    }
+    
     
     // thêm giá mới trực tiếp vào products
     // products.forEach(item => {
