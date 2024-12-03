@@ -13,10 +13,6 @@ if (uploadImage) {
         }
     });
 
-    if (uploadImagePreview.src){
-        removeButton.style.display = "block"; // Show the remove button
-    }
-
     removeButton.addEventListener("click", () => {
         uploadImageInput.value = ""; // Clear the file input
         uploadImagePreview.src = ""; // Clear the image preview

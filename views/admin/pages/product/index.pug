@@ -40,24 +40,21 @@ block main
                 .card-header(style=" --bs-card-cap-padding-y: 2rem; display: flex; align-items: center; justify-content: center;")
                     span.card-title Danh Sách Sản Phẩm
                 .card-body
-                    .d-flex
-                        // Gọi mixin form-change-multi bên trong div
-                        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                    +form-change-multi(
+                        `${prefixAdmin}/products/change-multi?_method=PATCH`, 
+                        [
+                            { value: 'active', text: 'Hoạt động' },
+                            { value: 'inactive', text: 'Dừng hoạt động' },
+                            { value: 'delete-all', text: 'Xóa tất cả' },
+                            { value: 'change-position', text: 'Thay đổi vị trí' }
+                        ],
+                        [
+                            { href: `${prefixAdmin}/products/restore`, class: 'btn btn-outline-secondary', text: 'Phục hồi' },
+                            { href: `${prefixAdmin}/products/create`, class: 'btn btn-outline-success', text: '+ Thêm mới' }
+                        ]
+                    )
 
-                        // Nút phục hồi nằm ngoài form, bên cạnh div d-flex
-                        a(
-                            href=`${prefixAdmin}/products/restore`
-                            type="button" 
-                            class="btn btn-outline-secondary" 
-                            style="height: 50px; border: 2px solid #6c757d;" 
-                            restore
-                        ) Phục hồi
 
-                        a(
-                            href=`${prefixAdmin}/products/create`
-                            class="btn btn-outline-success"
-                            style="height: 50px; border: 2px solid #28a745;" 
-                        ) + Thêm mới
 
                     table(class="table table-hover table-sm align-middle custom-table" checkbox-multi)
                         thead.table-light.custom-thead

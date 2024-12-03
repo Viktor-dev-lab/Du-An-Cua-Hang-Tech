@@ -17,7 +17,7 @@ block main
         .card-body.mt-4
           .d-flex.justify-content-center.align-items-center.mb-4
             +form-restore(`${prefixAdmin}/products/restore?_method=PATCH`)
-            a.btn.btn-primary.ml-3(href=`${prefixAdmin}/products` style="height: 40px; width: 200px; text-align: center; justify-content: center") Quay lại Trang
+            a.btn.btn-primary.ml-3(href=`${prefixAdmin}/products`) Quay lại Trang
 
           if products.length > 0
             +table_item(products)

@@ -8,7 +8,7 @@ const multer = require('multer');
 const fileUpload  = multer();
 
 // Validate
-const validate = require('../../validates/product.validate.js');
+const validate = require('../../validates/admin/product.validate.js');
 
 // route
 router.get('/', controller.product)

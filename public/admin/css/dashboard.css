@@ -192,13 +192,6 @@ img.avatar {
     margin-bottom: 1rem;
 }
 
-.btn {
-    padding: .7rem 1rem;
-    border: none;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-}
 
 .btn-block {
     display: block;

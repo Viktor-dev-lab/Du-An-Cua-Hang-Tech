@@ -1,18 +1,17 @@
-mixin form-change-multi(path)
+mixin form-change-multi(path, options = [], links = [])
     form(
         action= path
         method="POST"
         form-change-multi
     )
         .d-flex.align-items-center.mb-3
-            .form-group.flex-grow-1.mr-2
-                select(name="type" class="form-control" style="height: 38px; width: 310px" )
+            .form-group.mr-2
+                select(name="type" class="form-control" style="height: 38px; width: 310px")
                     option(disabled selected) Chọn hành động
-                    option(value="active") Hoạt động
-                    option(value="inactive") Dừng hoạt động
-                    option(value="delete-all") Xóa tất cả
-                    option(value="change-position") Thay đổi vị trí
-            .form-group.flex-grow-1.mr-2
+                    if options.length
+                        each option in options
+                            option(value=option.value) #{option.text}
+            .form-group.mr-2
                 input(
                     type="text"
                     name="ids"
@@ -24,5 +23,12 @@ mixin form-change-multi(path)
             button(
                 type="submit" 
                 class="btn btn-outline-primary" 
-                style="height: 50px; border: 2px solid #007bff;" 
             ) Áp dụng
+
+            if links.length
+                each link in links
+                    a(
+                        href=link.href
+                        type=link.type || 'button'
+                        class=link.class
+                    ) #{link.text}
