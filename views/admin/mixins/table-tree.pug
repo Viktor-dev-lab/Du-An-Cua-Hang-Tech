@@ -1,0 +1,73 @@
+mixin table-tree(items, level=0)
+    - const symbols = ['➤', '➥', '➟', '➠']; 
+    each item, index in items
+        - const prefix = Array(level*2).fill('&nbsp;&nbsp;&nbsp;').join('') + symbols[Math.min(level, symbols.length - 1)];
+        tr
+            td
+                input(
+                    type="checkbox"
+                    name="id"
+                    value=item.id
+                )
+            td #{index + 1}
+            td
+                img(
+                    src=item.thumbnail, 
+                    alt=`Sản phẩm ${index + 1}`, 
+                    class="img-thumbnail"
+                )
+            td !{prefix}#{item.title}
+            td #{item.price}$
+            td 
+                form(
+                    action=`${prefixAdmin}/products/change-multi?_method=PATCH`
+                    method="POST"
+                )
+                    input(
+                        type="number"
+                        value=item.position
+                        min="1"
+                        name="position"
+                    )
+            td
+                if item.status == "active"
+                    a(
+                        // khônglinksangtrangkhác
+                        href= "javascript:;" 
+                        data-status = item.status
+                        data-id = item.id
+                        button-change-status
+                        class="badge bg-success text-white status-badge"
+                        style="text-decoration: none;" 
+                    )  Hoạt Động
+
+                else
+                    a(
+                        href= "javascript:;"
+                        data-status = item.status
+                        data-id = item.id
+                        button-change-status
+                        class="badge bg-warning text-dark status-badge"
+                        style="text-decoration: none;" 
+                    )   Dừng Hoạt Động
+
+            td
+                .d-flex
+                    a(
+                        href = `${prefixAdmin}/products/detail/${item.id}`
+                        type="button"
+                        class="btn btn-secondary btn-sm me-2"
+                    ) Chi Tiết
+                    a(
+                        href = `${prefixAdmin}/products/edit/${item.id}`
+                        type="button"
+                        class="btn btn-warning btn-sm me-2"
+                    ) Sửa
+                    button(
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        button-delete
+                        data-id=item.id
+                    ) Xóa
+        if item.children && item.children.length > 0
+            +table-tree(item.children, level + 1)

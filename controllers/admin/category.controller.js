@@ -6,6 +6,7 @@ const systemConfig = require('../../config/system.js');
 
 // Helpers
 const paginationHelpers = require("../../helpers/pagination.js");
+const createTreeHelpers = require("../../helpers/createTree.js");
 
 // [GET] admin/products-category
 module.exports.index = async (req, res) => {
@@ -27,17 +28,27 @@ module.exports.index = async (req, res) => {
      );
 
     const records = await ProductCategory.find(find);
+    const newRecords = createTreeHelpers.tree(records);
 
     res.render("admin/pages/category/index.pug", {
         pageTitle: "Danh Mục Sản Phẩm",
-        records: records,
+        records: newRecords,
         pagination: Pagination
     })
 }
 
-module.exports.create = (req, res) => {
+// [GET] admin/products-category/create
+module.exports.create = async (req, res) => {
+    let find = {
+        deleted: false
+    };
+
+    const records = await ProductCategory.find(find);
+    const newRecords = createTreeHelpers.tree(records);
+
     res.render("admin/pages/category/create.pug", {
-        pageTitle: "Tạo Danh Mục Sản Phẩm"
+        pageTitle: "Tạo Danh Mục Sản Phẩm",
+        records: newRecords
     })
 }
 

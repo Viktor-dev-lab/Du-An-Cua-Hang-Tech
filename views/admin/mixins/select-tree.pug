@@ -1,0 +1,7 @@
+mixin select-tree(items, level = 0)
+    - const symbols = ['➤', '➥', '➟', '➠']; 
+    each item in items
+        - const prefix = Array(level*2).fill('&nbsp;&nbsp;&nbsp;').join('') + symbols[Math.min(level, symbols.length - 1)];
+        option(value=item.id)!= `${prefix} ${item.title}`
+        if item.children && item.children.length > 0
+            +select-tree(item.children, level + 1)
