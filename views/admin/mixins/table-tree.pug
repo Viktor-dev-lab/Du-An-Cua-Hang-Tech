@@ -1,6 +1,6 @@
 mixin table-tree(items, level=0)
     - const symbols = ['➤', '➥', '➟', '➠']; 
-    each item, index in items
+    each item in items
         - const prefix = Array(level*2).fill('&nbsp;&nbsp;&nbsp;').join('') + symbols[Math.min(level, symbols.length - 1)];
         tr
             td
@@ -9,7 +9,7 @@ mixin table-tree(items, level=0)
                     name="id"
                     value=item.id
                 )
-            td #{index + 1}
+            td #{item.index}
             td
                 img(
                     src=item.thumbnail, 
