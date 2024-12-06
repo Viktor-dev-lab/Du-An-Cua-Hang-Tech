@@ -12,11 +12,11 @@ block main
         // Card cho phần form
         .card.mb-5(style="--bs-card-spacer-y: 2rem; --bs-card-spacer-x: 2rem;")
             .card-header(style="display: flex; align-items: center; justify-content: center;")
-                span.card-title Thêm Mới Danh Mục Sản Phẩm
+                span.card-title Chỉnh Sửa Danh Mục
             .card-body
                 form(
                     class="form-create-product"
-                    action=`${prefixAdmin}/products-category/create`
+                    action=`${prefixAdmin}/products-category/edit/${records.id}?_method=PATCH`
                     method="POST"
                     enctype="multipart/form-data"
                 )
@@ -28,6 +28,7 @@ block main
                             id="title"
                             name="title"
                             required
+                            value=records.title
                         )
 
 
@@ -39,8 +40,8 @@ block main
                             class="form-control"
                         )
                             option(value="") -- Danh mục cha --
-                            if (records)
-                                +select-tree(records)
+                            if parent
+                                +select-tree(parent,1,records.parent_id)
 
                     div(class="form-group")
                         label(for="desc") Mô tả
@@ -49,7 +50,7 @@ block main
                             id="desc"
                             name="description"
                             rows="5"
-                        )
+                        ) !{records.description}
 
 
                     div(
@@ -74,7 +75,7 @@ block main
                             )
                                 i(class="fa fa-times") 
                             img(
-                                src=""
+                                src=records.thumbnail
                                 upload-image-preview
                                 id="imagePreview"
                                 style="display: block;"
@@ -90,6 +91,7 @@ block main
                             name="position"
                             placeholder="Tự động tăng"
                             min="1"
+                            value=records.position
                         )
 
                     div(class="form-group form-check form-check-inline")
@@ -99,7 +101,7 @@ block main
                             id="statusActive"
                             name="status"
                             value="active"
-                            checked
+                            checked=(records.status=="active"?true:false)
                         )
                         label(for="statusActive" class="form-check-label") Hoạt động
 
@@ -110,6 +112,7 @@ block main
                             id="statusInActive"
                             name="status"
                             value="inactive"
+                            checked=(records.status=="inactive"?true:false)
                         )
                         label(for="statusInActive" class="form-check-label") Dừng Hoạt động
 
@@ -117,7 +120,7 @@ block main
                         button(
                             type="submit"
                             class="btn btn-primary"
-                        ) Tạo mới
+                        ) Chỉnh Sửa
 
     // product
     script(src = '/admin/js/category.js')
