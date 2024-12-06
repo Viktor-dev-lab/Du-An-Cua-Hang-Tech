@@ -248,10 +248,14 @@ module.exports.edit = async (req, res) => {
         }
     
         const products = await Product.findOne(find);
-    
+
+        const records = await ProductCategory.find({deleted:false});
+        const newRecords = createTreeHelpers.tree(records);
+
         res.render("admin/pages/product/edit.pug", {
             pageTitle: "Sửa Chi Tiết sản phẩm",
-            product: products
+            product: products,
+            records: newRecords
         })
     } catch(error){
         res.redirect(`${systemConfig.prefixAdmin}/products`); 
