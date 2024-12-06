@@ -1,7 +1,7 @@
+//model
 const ProductCategory = require("../../models/product-category.model");
-const ProductsCategory = require("../../models/product-category.model");
 
-// Link Web
+// prefix address
 const systemConfig = require('../../config/system.js');
 
 // Helpers

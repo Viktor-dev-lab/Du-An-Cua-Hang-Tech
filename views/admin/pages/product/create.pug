@@ -1,5 +1,6 @@
 extends ../../layout/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
 
 block header
   link(rel="stylesheet", href="../../../admin/css/product-create.css")
@@ -28,6 +29,17 @@ block main
               name="title"
               required
             )
+          
+          div(class="form-group")
+            label(for="title") Danh mục cha
+            select(
+                name="product_category_id"
+                id="product_category_id"
+                class="form-control"
+            )
+                option(value="") -- Danh mục cha --
+                if records
+                    +select-tree(records)
   
           div(class="form-group")
             label(for="desc") Mô tả
