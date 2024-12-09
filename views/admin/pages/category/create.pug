@@ -3,7 +3,6 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block header
-    link(rel="stylesheet" href="../../../admin/css/product-create.css")
     link(rel="stylesheet" href="../../../admin/css/category.css")
 
 block main
@@ -15,7 +14,6 @@ block main
                 span.card-title Thêm Mới Danh Mục Sản Phẩm
             .card-body
                 form(
-                    class="form-create-product"
                     action=`${prefixAdmin}/products-category/create`
                     method="POST"
                     enctype="multipart/form-data"
@@ -121,4 +119,3 @@ block main
 
     // product
     script(src = '/admin/js/category.js')
-    script(src = '/admin/js/product-create.js')

@@ -1,3 +1,31 @@
+// Start checkbox
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+if (checkboxMulti) {
+    const checkboxAll = checkboxMulti.querySelector("input[name=checkall]");
+    const checkboxID = checkboxMulti.querySelectorAll("input[name=id]");
+    checkboxAll.addEventListener("click", () => {
+        if (checkboxAll.checked == true) {
+            checkboxID.forEach((checkbox) => {
+                checkbox.checked = true;
+            })
+        } else {
+            checkboxID.forEach((checkbox) => {
+                checkbox.checked = false;
+            })
+        }
+    });
+
+    checkboxID.forEach((button) => {
+        button.addEventListener('click', () => {
+            const countCheck = checkboxMulti.querySelectorAll("input[name=id]:checked");
+            checkboxAll.checked = checkboxID.length === countCheck.length;
+        });
+    });
+
+}
+// End checkbox
+
+
 // Start Form Change Multi
 const formChangeMulti = document.querySelector("[form-change-multi]");
 if (formChangeMulti) {

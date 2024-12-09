@@ -1,5 +1,4 @@
 extends ../../layout/default.pug
-include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/table-tree.pug
 
@@ -13,14 +12,14 @@ block main
 
         .card.mb-3
             .card-header Danh sách
-                .card-body
-                    .row
-                        .col-8
-                        .col-4
-                            a(
-                                href=`${prefixAdmin}/products-category/create`
-                                class="btn btn-outline-success"
-                            ) + Thêm mới
+            .card-body
+                .row
+                    .col-8
+                    .col-4
+                        a(
+                            href=`${prefixAdmin}/products-category/create`
+                            class="btn btn-outline-success"
+                        ) + Thêm mới
 
 
         .card.mb-5(style="--bs-card-spacer-y: 3rem; --bs-card-spacer-x: 3rem;")
@@ -56,7 +55,6 @@ block main
                     tbody
                         +table-tree(records)
                         
-        +pagination(pagination)
 
     // product
     script(src = '/admin/js/category.js')

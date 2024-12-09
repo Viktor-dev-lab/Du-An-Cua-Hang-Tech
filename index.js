@@ -36,7 +36,7 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 routeClient(app)
 routeAdmin(app)
 
-// Biến toán cục cho file pug
+// Biến toàn cục cho toàn bộ ứng dụng
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 
 

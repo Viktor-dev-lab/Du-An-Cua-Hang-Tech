@@ -1,0 +1,42 @@
+extends ../../layout/default.pug
+
+
+block header
+    link(rel="stylesheet" href=" ../../../admin/css/role.css")
+
+block main
+    .main-content
+        .card.mb-5(style="--bs-card-spacer-y: 2rem; --bs-card-spacer-x: 2rem;")
+            .card-header(style="display: flex; align-items: center; justify-content: center;")
+                span.card-title Chỉnh Sửa Nhóm Quyền
+            .card-body
+                form(
+                    action=`${prefixAdmin}/roles/edit/${roles.id}?_method=PATCH`
+                    method="POST"
+                )
+                    div(class="form-group mb-3")
+                        label(for="title" class="fw-bold") Tiêu Đề
+                            input(
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            value=roles.title
+                            required
+                        )
+                    div(class="form-group mb-3")
+                        label(for="desc" class="fw-bold") Mô tả
+                        textarea(
+                            class="form-control textarea-mce"
+                            id="desc"
+                            name="description"
+                            rows="5"
+                        ) !{roles.description}
+                    div(class="form-group")
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Chỉnh Sửa
+
+    // product
+    script(src = '/admin/js/role.js')

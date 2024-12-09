@@ -15,25 +15,12 @@ module.exports.index = async (req, res) => {
         deleted: false,
     };
 
-     // Phân Trang
-     const countProducts = await ProductCategory.countDocuments(find); // Đếm tổng số sản phẩm
-     // Chức năng phân trang
-     let Pagination = paginationHelpers(
-         {
-             currentPage: 1,
-             limitPage: 4
-         },
-         req,
-         countProducts
-     );
-
     const records = await ProductCategory.find(find);
     const newRecords = createTreeHelpers.tree(records);
 
     res.render("admin/pages/category/index.pug", {
         pageTitle: "Danh Mục Sản Phẩm",
-        records: newRecords,
-        pagination: Pagination
+        records: newRecords
     })
 }
 
