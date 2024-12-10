@@ -1,0 +1,55 @@
+extends ../../layout/default.pug
+include ../../mixins/form-change-multi.pug
+include ../../mixins/table-tree.pug
+
+
+block header
+    link(rel="stylesheet" href=" ../../../admin/css/product.css")
+
+block main
+    .main-content
+        include ../../partials/header.pug
+
+        .card.mb-3
+            .card-header Danh sách
+            .card-body
+                .row
+                    .col-8
+                    .col-4
+                        a(
+                            href=`${prefixAdmin}/accounts/create`
+                            class="btn btn-outline-success"
+                        ) + Thêm mới
+
+
+        .card.mb-5(style="--bs-card-spacer-y: 3rem; --bs-card-spacer-x: 3rem;")
+            .card-header(style=" --bs-card-cap-padding-y: 2rem; display: flex; align-items: center; justify-content: center;")
+                span.card-title Danh Mục Sản Phẩm
+            .card-body
+                table(class="table table-hover table-sm align-middle custom-table" checkbox-multi)
+                    thead.table-light.custom-thead
+                        tr
+                            th STT
+                            th Họ tên
+                            th Email
+                            th Avatar
+                            th Quyền
+                            th Trạng Thái
+                    tbody
+                        each item, index in accounts
+                            tr
+                                td #{index+1}
+                                td #{item.fullName}
+                                td #{item.email}
+                                td
+                                    img(
+                                        src=item.avatar, 
+                                        alt=`Avatar ${index + 1}`, 
+                                        class="img-avatar"
+                                    )
+                                td #{item.role_id}
+                                td #{item.status}
+                        
+
+    // product
+    script(src = '/admin/js/account.js')
