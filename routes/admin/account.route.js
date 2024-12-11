@@ -22,5 +22,13 @@ router.post(
     validate.createPost,
     controller.createPost
 )
+router.get('/edit/:id', controller.edit)
+router.patch(
+    '/edit/:id', 
+    fileUpload.single('avatar'),
+    uploadClound.upload,
+    validate.editPatch,
+    controller.editPatch
+)
 
 module.exports = router
