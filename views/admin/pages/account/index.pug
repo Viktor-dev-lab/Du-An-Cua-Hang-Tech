@@ -26,29 +26,63 @@ block main
             .card-header(style=" --bs-card-cap-padding-y: 2rem; display: flex; align-items: center; justify-content: center;")
                 span.card-title Danh Mục Sản Phẩm
             .card-body
-                table(class="table table-hover table-sm align-middle custom-table" checkbox-multi)
+                table(class="table table-hover table-sm align-middle custom-table table-responsive")
                     thead.table-light.custom-thead
                         tr
                             th STT
                             th Họ tên
                             th Email
-                            th Avatar
                             th Quyền
                             th Trạng Thái
+                            th Chỉnh Sửa
                     tbody
                         each item, index in accounts
                             tr
                                 td #{index+1}
                                 td #{item.fullName}
                                 td #{item.email}
+                                td #{item.role.title}
                                 td
-                                    img(
-                                        src=item.avatar, 
-                                        alt=`Avatar ${index + 1}`, 
-                                        class="img-avatar"
-                                    )
-                                td #{item.role_id}
-                                td #{item.status}
+                                    if item.status == "active"
+                                        a(
+                                            // khônglinksangtrangkhác
+                                            href= "javascript:;" 
+                                            data-status = item.status
+                                            data-id = item.id
+                                            button-change-status
+                                            class="badge bg-success text-white status-badge"
+                                            style="text-decoration: none;" 
+                                            )  Hoạt Động
+
+                                    else
+                                        a(
+                                            href= "javascript:;"
+                                            data-status = item.status
+                                            data-id = item.id
+                                            button-change-status
+                                            class="badge bg-warning text-dark status-badge"
+                                            style="text-decoration: none;" 
+                                        )   Dừng Hoạt Động
+                                
+                                td 
+                                     .d-flex
+                                        a(
+                                            href = `${prefixAdmin}/roles/detail/${item.id}`
+                                            type="button"
+                                            class="btn btn-secondary btn-sm me-2"
+                                        ) Chi Tiết
+                                        a(
+                                            href = `${prefixAdmin}/roles/edit/${item.id}`
+                                            type="button"
+                                            class="btn btn-warning btn-sm me-2"
+                                        ) Sửa
+                                        button(
+                                            type="button"
+                                            class="btn btn-danger btn-sm"
+                                            button-delete
+                                            data-id=item.id
+                                        ) Xóa
+
                         
 
     // product

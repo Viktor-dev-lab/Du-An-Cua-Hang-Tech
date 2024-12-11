@@ -53,3 +53,31 @@ if (dataRecords){
         });
     });
 }
+
+// Delete Item
+const buttonDelete = document.querySelectorAll("[button-delete]");
+if (buttonDelete.length > 0) {
+    const formDeleteItem = document.querySelector("#form-delete-item");
+    const path = formDeleteItem.getAttribute("data-path");
+
+    buttonDelete.forEach(button => {
+        button.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa sản phẩm?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#d33', // Màu cho nút "Xóa"
+                cancelButtonColor: '#3085d6' // Màu cho nút "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const id = button.getAttribute("data-id");
+                    const action = `${path}/${id}?_method=DELETE`;
+                    formDeleteItem.action = action;
+                    formDeleteItem.submit();
+                }
+            });
+        });
+    });
+}

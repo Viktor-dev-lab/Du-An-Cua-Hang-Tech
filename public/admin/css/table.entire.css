@@ -2,7 +2,7 @@
 /* Đặt chiều cao cho mỗi hàng */
 /* Đặt chiều cao cố định cho mỗi hàng */
 .table tbody tr {
-    height: 100px;
+    height: 70px;
     /* Điều chỉnh chiều cao hàng theo yêu cầu */
 }
 
@@ -11,7 +11,7 @@
 .table th {
     vertical-align: middle;
     /* Đảm bảo nội dung trong ô căn giữa theo chiều dọc */
-    padding: 0.75rem;
+    padding: 0.5rem;
     /* Điều chỉnh padding */
     border: 1px solid #ddd;
     /* Thêm đường viền cho các ô nếu cần */

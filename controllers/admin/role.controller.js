@@ -95,3 +95,12 @@ module.exports.permissionPatch = async (req, res) => {
 
     res.redirect(`${systemConfig.prefixAdmin}/roles/permission`);
 }
+
+// [DELETE] admin/roles/delete/:id
+module.exports.delete = async (req, res) => {
+    const id = req.params.id;
+    await Role.deleteOne({ _id: id }, {
+        deletedAt: new Date()
+    });
+    res.redirect("back");
+}

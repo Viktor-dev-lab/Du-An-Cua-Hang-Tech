@@ -89,11 +89,18 @@ block main
 
                     div(class="form-group")
                         label(for="role_id") Phân quyền 
-                        select(name="role_id" id = "role_id" class="form-control")
-                            option(disabled) -- Chọn --
-                            option(value="") Quản trị viên
-                            option(value="") Quản trị nội dung
-                        
+                        if roles.length > 0
+                            select(name="role_id" id = "role_id" class="form-control")
+                                option(disabled) -- Chọn --
+                                each item in roles
+                                    option(value=item.id) #{item.title}
+                        else
+                            a(
+                                href=`${prefixAdmin}/roles/create`
+                                type="button"
+                                class="btn btn-danger"
+                                style="display: inline-block; width: 200px;" 
+                            ) + Tạo Mới Quyền
 
                     div(class="form-group form-check form-check-inline")
                         input(
@@ -116,10 +123,13 @@ block main
                         )
                         label(for="statusInActive" class="form-check-label") Dừng Hoạt động
 
+                    // Button "Tạo mới" luôn hiển thị
                     div(class="form-group")
                         button(
                             type="submit"
                             class="btn btn-primary"
+                            id="submit-button"
+                            disabled=roles.length === 0
                         ) Tạo mới
 
     // product

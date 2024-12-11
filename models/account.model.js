@@ -4,7 +4,7 @@ const generate = require('../helpers/generate.js');
 const accountSchema = new mongoose.Schema({
     fullName: String,
     email: String,
-    passowrd: String,
+    password: String,
     token: {
         type: String,
         default: generate.generateRandomString(20)
