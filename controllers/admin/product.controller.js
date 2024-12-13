@@ -120,10 +120,16 @@ module.exports.changeMulti = async (req, res) => {
                 req.flash('success', `Xóa Viễn Viễn ${ids.length} sản phẩm thành công`);
             } else {
                 // Xóa tạm thời các sản phẩm
-                await Product.updateMany({ _id: { $in: ids } }, {
+                await Product.updateMany(
+                    { _id: { $in: ids } }, 
+                    {
                         deleted: true,
-                        deletedAt: new Date()
-                    });
+                        deletedBy: {
+                            account_id: res.locals.user.id,
+                            deleteAt: new Date()
+                        }
+                    }
+                );
                 req.flash('success', `Xóa tạm thời ${ids.length} sản phẩm thành công`);
             }
             break;
@@ -145,9 +151,10 @@ module.exports.changeMulti = async (req, res) => {
 // [DELETE] admin/products//delete/permanently/:id
 module.exports.changeDeletePermanently = async (req, res) => {
     const id = req.params.id;
-    await Product.deleteOne({ _id: id }, {
-        deletedAt: new Date()
-    });
+    await Product.deleteOne(
+        { _id: id }, 
+        { deletedAt: new Date()}
+    );
     res.redirect("back");
 }
 
@@ -162,10 +169,16 @@ module.exports.changeDeleteTemporarily = async (req, res) => {
         return;
     }
 
-    await Product.updateOne({ _id: id }, {
-        deleted: true,
-        deletedAt: new Date()
-    });
+    await Product.updateOne(
+        { _id: id }, 
+        {
+            deleted: true,
+            deletedBy: {
+                account_id: res.locals.user.id,
+                deleteAt: new Date()
+            }
+        }
+    );
     res.redirect("back");
 }
 
@@ -199,6 +212,14 @@ module.exports.GetRestore = async (req, res) => {
         deleted: true
     };
     const products = await Product.find(find);
+    for (const product of products){
+        const user = await Account.findOne({
+            _id: product.deletedBy.account_id
+        })
+        if(user){
+            product.fullName = user.fullName
+        }
+    }
 
     // Render trang với danh sách sản phẩm
     res.render("admin/pages/product/deletedItem.pug", {

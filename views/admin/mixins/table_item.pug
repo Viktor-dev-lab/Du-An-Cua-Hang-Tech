@@ -1,3 +1,5 @@
+include ./time.pug
+
 mixin table_item(products)
     table(class="table table-hover table-sm align-middle custom-table" checkbox-multi)
         thead.table-light.custom-thead
@@ -9,8 +11,9 @@ mixin table_item(products)
                 th Tiêu Đề
                 th Giá
                 th Sắp Xếp
+                th Người Xóa
                 th Hành Động
-        
+
         tbody
             each item, index in products
                 tr
@@ -35,7 +38,15 @@ mixin table_item(products)
                             value=item.position
                             min="1"
                             name="position"
+                            style="width: 60px"
                         )
+                    td 
+                        p #{item.fullName} 
+                        if (item.deletedBy.deleteAt)
+                            p
+                                +formatDayTimeString(item.deletedBy.deleteAt)
+                                br
+                                +formatHourTimeString(item.deletedBy.deleteAt)
                     td
                         .d-flex
                             form(
