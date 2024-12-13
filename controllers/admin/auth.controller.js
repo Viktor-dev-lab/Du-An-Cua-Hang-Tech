@@ -7,10 +7,13 @@ const systemConfig = require('../../config/system.js');
 
 // [GET] admin/auth/login
 module.exports.index = async (req, res) => {
-
-    res.render("admin/pages/auth/index.pug", {
-        pageTitle: "LOGIN",
-    })
+    if(req.cookies.token){
+        res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+    } else {
+        res.render("admin/pages/auth/index.pug", {
+            pageTitle: "LOGIN",
+        })
+    }
 }
 
 // [POST] admin/auth/login
