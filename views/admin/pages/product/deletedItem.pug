@@ -8,24 +8,25 @@ block header
 
 block main 
   .main-content
-    +alert-success(5000)
-    +alert-error(5000)
-    .container.mt-4
-      .card
-        .card-header.text-center
-          h2 Danh Sách Sản Phẩm Đã Xóa
-        .card-body.mt-4
-          .d-flex.justify-content-center.align-items-center.mb-4
-            +form-restore(`${prefixAdmin}/products/restore?_method=PATCH`)
-            a.btn.btn-primary.ml-3(href=`${prefixAdmin}/products`) Quay lại Trang
+    if (role.permission.includes("products_delete"))
+      +alert-success(5000)
+      +alert-error(5000)
+      .container.mt-4
+        .card
+          .card-header.text-center
+            h2 Danh Sách Sản Phẩm Đã Xóa
+          .card-body.mt-4
+            .d-flex.justify-content-center.align-items-center.mb-4
+              +form-restore(`${prefixAdmin}/products/restore?_method=PATCH`)
+              a.btn.btn-primary.ml-3(href=`${prefixAdmin}/products`) Quay lại Trang
 
-          if products.length > 0
-            +table_item(products)
-          else
-            .mt-5.mb-5
-              .text-center
-                i.fa.fa-exclamation-triangle(style="font-size: 50px; color: #f39c12;")
-                h4.mt-3 Không có sản phẩm nào để xóa.
-                p.text-muted.mt-2 Một số sản phẩm có thể đã được phục hồi hoặc chưa bao giờ bị xóa.
+            if products.length > 0
+              +table_item(products)
+            else
+              .mt-5.mb-5
+                .text-center
+                  i.fa.fa-exclamation-triangle(style="font-size: 50px; color: #f39c12;")
+                  h4.mt-3 Không có sản phẩm nào để xóa.
+                  p.text-muted.mt-2 Một số sản phẩm có thể đã được phục hồi hoặc chưa bao giờ bị xóa.
   // product
   script(src = '/admin/js/product.js')

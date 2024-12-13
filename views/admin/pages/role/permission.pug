@@ -111,7 +111,32 @@ block main
                             each item in records
                                 td.text-center
                                     input(type="checkbox")
-                        tr(data-name="roles_permission")
+
+                        //- Tài khoản
+                        tr
+                            td(colspan="4")
+                                b Tài khoản
+                        tr(data-name="accounts_view")
+                            td Xem
+                            each item in records
+                                td.text-center
+                                    input(type="checkbox")
+                        tr(data-name="accounts_create")
+                            td Thêm mới
+                            each item in records
+                                td.text-center
+                                    input(type="checkbox")
+                        tr(data-name="accounts_edit")
+                            td Chỉnh Sửa
+                            each item in records
+                                td.text-center
+                                    input(type="checkbox")
+                        tr(data-name="accounts_delete")
+                            td Xóa
+                            each item in records
+                                td.text-center
+                                    input(type="checkbox")
+                        tr(data-name="accounts_permission")
                             td Phân Quyền
                             each item in records
                                 td.text-center

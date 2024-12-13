@@ -8,119 +8,121 @@ block header
 
 block main
     .main-content
-        +alert-error(3000)
-        // Card cho phần form
-        .card.mb-5(style="--bs-card-spacer-y: 2rem; --bs-card-spacer-x: 2rem;")
-            .card-header(style="display: flex; align-items: center; justify-content: center;")
-                span.card-title Chỉnh Sửa Danh Mục
-            .card-body
-                form(
-                    class="form-create-product"
-                    action=`${prefixAdmin}/products-category/edit/${records.id}?_method=PATCH`
-                    method="POST"
-                    enctype="multipart/form-data"
-                )
-                    div(class="form-group")
-                        label(for="title") Tiêu Đề
-                        input(
-                            type="text"
-                            class="form-control"
-                            id="title"
-                            name="title"
-                            required
-                            value=records.title
-                        )
-
-
-                    div(class="form-group")
-                        label(for="title") Danh mục cha
-                        select(
-                            name="parent_id"
-                            id="parent_id"
-                            class="form-control"
-                        )
-                            option(value="") -- Danh mục cha --
-                            if parent
-                                +select-tree(parent,1,records.parent_id)
-
-                    div(class="form-group")
-                        label(for="desc") Mô tả
-                        textarea(
-                            class="form-control textarea-mce"
-                            id="desc"
-                            name="description"
-                            rows="5"
-                        ) !{records.description}
-
-
-                    div(
-                        class="form-group" 
-                        upload-image
+        if (role.permission.includes("products-category_edit"))
+            +alert-error(3000)
+            // Card cho phần form
+            .card.mb-5(style="--bs-card-spacer-y: 2rem; --bs-card-spacer-x: 2rem;")
+                .card-header(style="display: flex; align-items: center; justify-content: center;")
+                    span.card-title Chỉnh Sửa Danh Mục
+                .card-body
+                    form(
+                        class="form-create-product"
+                        action=`${prefixAdmin}/products-category/edit/${records.id}?_method=PATCH`
+                        method="POST"
+                        enctype="multipart/form-data"
                     )
-                        label(for="thumbnail") Ảnh
-                        input(
-                            type="file"
-                            class="form-control-file"
-                            id="thumbnail"
-                            name="thumbnail"
-                            accept="image/*"
-                            upload-image-input
+                        div(class="form-group")
+                            label(for="title") Tiêu Đề
+                            input(
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                name="title"
+                                required
+                                value=records.title
+                            )
+
+
+                        div(class="form-group")
+                            label(for="title") Danh mục cha
+                            select(
+                                name="parent_id"
+                                id="parent_id"
+                                class="form-control"
+                            )
+                                option(value="") -- Danh mục cha --
+                                if parent
+                                    +select-tree(parent,1,records.parent_id)
+
+                        div(class="form-group")
+                            label(for="desc") Mô tả
+                            textarea(
+                                class="form-control textarea-mce"
+                                id="desc"
+                                name="description"
+                                rows="5"
+                            ) !{records.description}
+
+
+                        div(
+                            class="form-group" 
+                            upload-image
                         )
-                        div(style="position: relative; display: inline-block;")
+                            label(for="thumbnail") Ảnh
+                            input(
+                                type="file"
+                                class="form-control-file"
+                                id="thumbnail"
+                                name="thumbnail"
+                                accept="image/*"
+                                upload-image-input
+                            )
+                            div(style="position: relative; display: inline-block;")
+                                button(
+                                    type="button"
+                                    class="btn btn-danger"
+                                    style="position: absolute; top: 0; left: 0; z-index: 1; display: none;"
+                                    id="removeButton"
+                                )
+                                    i(class="fa fa-times") 
+                                img(
+                                    src=records.thumbnail
+                                    upload-image-preview
+                                    id="imagePreview"
+                                    style="display: block;"
+                                )
+
+
+                        div(class="form-group")
+                            label(for="position") Vị trí
+                            input(
+                                type="number"
+                                class="form-control"
+                                id="position"
+                                name="position"
+                                placeholder="Tự động tăng"
+                                min="1"
+                                value=records.position
+                            )
+
+                        div(class="form-group form-check form-check-inline")
+                            input(
+                                type="radio"
+                                class="form-check-input"
+                                id="statusActive"
+                                name="status"
+                                value="active"
+                                checked=(records.status=="active"?true:false)
+                            )
+                            label(for="statusActive" class="form-check-label") Hoạt động
+
+                        div(class="form-group form-check form-check-inline")
+                            input(
+                                type="radio"
+                                class="form-check-input"
+                                id="statusInActive"
+                                name="status"
+                                value="inactive"
+                                checked=(records.status=="inactive"?true:false)
+                            )
+                            label(for="statusInActive" class="form-check-label") Dừng Hoạt động
+
+                        div(class="form-group")
                             button(
-                                type="button"
-                                class="btn btn-danger"
-                                style="position: absolute; top: 0; left: 0; z-index: 1; display: none;"
-                                id="removeButton"
-                            )
-                                i(class="fa fa-times") 
-                            img(
-                                src=records.thumbnail
-                                upload-image-preview
-                                id="imagePreview"
-                                style="display: block;"
-                            )
-
-
-                    div(class="form-group")
-                        label(for="position") Vị trí
-                        input(
-                            type="number"
-                            class="form-control"
-                            id="position"
-                            name="position"
-                            placeholder="Tự động tăng"
-                            min="1"
-                            value=records.position
-                        )
-
-                    div(class="form-group form-check form-check-inline")
-                        input(
-                            type="radio"
-                            class="form-check-input"
-                            id="statusActive"
-                            name="status"
-                            value="active"
-                            checked=(records.status=="active"?true:false)
-                        )
-                        label(for="statusActive" class="form-check-label") Hoạt động
-
-                    div(class="form-group form-check form-check-inline")
-                        input(
-                            type="radio"
-                            class="form-check-input"
-                            id="statusInActive"
-                            name="status"
-                            value="inactive"
-                            checked=(records.status=="inactive"?true:false)
-                        )
-                        label(for="statusInActive" class="form-check-label") Dừng Hoạt động
-
-                    div(class="form-group")
-                        button(
-                            type="submit"
-                            class="btn btn-primary"
-                        ) Chỉnh Sửa
-
+                                type="submit"
+                                class="btn btn-primary"
+                            ) Chỉnh Sửa
+        else
+            h1 Bạn không có quyền chỉnh sửa
     // product
     script(src = '/admin/js/category.js')

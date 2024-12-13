@@ -6,39 +6,44 @@ input(type="checkbox" name = "" id="menu-toggle")
                 img.logo(src="/admin/images/logo.jpg", alt="logo")
                 span Happy Code
         .sidebar-avatar
-            img.avatar(src="/admin/images/user_admin.jpg", alt="Avatar")
+            img.avatar(src=`${user.avatar}`, alt="Avatar")
             .avatar-info
                 .avatar-text
-                    h4 Xuan Le
-                    small 0399984586
+                    h4 #{user.fullName}
+                    small  #{user.phone}
                 span.las.la-angle-double-down
         
         nav.sidebar-menu
             ul
                 li
-                     a(href = `${prefixAdmin}/dashboard`) 
+                    a(href = `${prefixAdmin}/dashboard`) 
                         span.las.la-adjust
                         span Tổng Quan 
-                li
-                     a(href = `${prefixAdmin}/products-category`) 
-                        span.fa-solid.fa-layer-group
-                        span Danh Mục Sản Phẩm
-                li
-                     a(href = `${prefixAdmin}/Anlytics`) 
-                        span.las.la-chart-bar
-                        span Phân Tích
-                li
-                     a(href = `${prefixAdmin}/accounts`) 
-                        span.las.la-user
-                        span Tài Khoản
-                li
-                     a(href = `${prefixAdmin}/roles`) 
-                        span.las.la-address-card
-                        span Phân Quyền
-                li
-                     a(href = `${prefixAdmin}/products`) 
-                        span.las.la-archive
-                        span Sản Phẩm
+                if (role.permission.includes("products-category_view"))
+                    li
+                        a(href = `${prefixAdmin}/products-category`) 
+                            span.fa-solid.fa-layer-group
+                            span Danh Mục Sản Phẩm
+                if (role.permission.includes("products-category_view"))
+                    li
+                        a(href = `${prefixAdmin}/Anlytics`) 
+                            span.las.la-chart-bar
+                            span Phân Tích
+                if (role.permission.includes("accounts_view"))
+                    li
+                        a(href = `${prefixAdmin}/accounts`) 
+                            span.las.la-user
+                            span Tài Khoản
+                if (role.permission.includes("roles_view"))
+                    li
+                        a(href = `${prefixAdmin}/roles`) 
+                            span.las.la-address-card
+                            span Phân Quyền
+                if (role.permission.includes("products_view"))
+                    li
+                        a(href = `${prefixAdmin}/products`) 
+                            span.las.la-archive
+                            span Sản Phẩm
         .sidebar-card
             img.img_footer(src="/admin/images/img_footer.png", alt="Avatar")
             div

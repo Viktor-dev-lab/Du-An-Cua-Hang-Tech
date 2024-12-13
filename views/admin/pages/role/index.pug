@@ -9,63 +9,69 @@ block header
 
 block main
     .main-content
-        include ../../partials/header.pug
+        if (role.permission.includes("roles_view"))
+            include ../../partials/header.pug
 
-        .card.mb-3
-            .card-header Danh sách
-            .card-body
-                .d-grid.gap-2.d-md-flex.justify-content-md-end
-                    a(
-                        href=`${prefixAdmin}/roles/create`
-                        class="btn btn-outline-success"
-                    ) + Thêm mới
-                    a(
-                        href=`${prefixAdmin}/roles/permission`
-                        class="btn btn-outline-primary"
-                    ) + Chi tiết Phân Quyền
+            .card.mb-3
+                .card-header Danh sách
+                .card-body
+                    .d-grid.gap-2.d-md-flex.justify-content-md-end
+                        if (role.permission.includes("roles_create"))
+                            a(
+                                href=`${prefixAdmin}/roles/create`
+                                class="btn btn-outline-success"
+                            ) + Thêm mới
+                        if (role.permission.includes("roles_edit"))
+                            a(
+                                href=`${prefixAdmin}/roles/permission`
+                                class="btn btn-outline-primary"
+                            ) + Chi tiết Phân Quyền
 
-        .card.mb-5
-            table(class="table table-hover")
-                thead.table-light.custom-thead
-                    tr
-                        th STT
-                        th Tiêu Đề
-                        th Mô Tả
-                        th Hành Động
-
-                tbody
-                    if roles
-                        each item, index in roles
-                            tr
-                                td #{index+1}
-                                td #{item.title}
-                                td !{item.description}
-                                td
-                                    .d-flex
-                                        a(
-                                            href = `${prefixAdmin}/roles/detail/${item.id}`
-                                            type="button"
-                                            class="btn btn-secondary btn-sm me-2"
-                                        ) Chi Tiết
-                                        a(
-                                            href = `${prefixAdmin}/roles/edit/${item.id}`
-                                            type="button"
-                                            class="btn btn-warning btn-sm me-2"
-                                        ) Sửa
-                                        button(
-                                            type="button"
-                                            class="btn btn-danger btn-sm"
-                                            button-delete
-                                            data-id=item.id
-                                        ) Xóa
-                    else
+            .card.mb-5
+                table(class="table table-hover")
+                    thead.table-light.custom-thead
                         tr
-                            td(colspan="4" class="text-center") Không có dữ liệu
-            form(
-                action=""
-                method="POST"
-                id="form-delete-item"
-                data-path=`${prefixAdmin}/roles/delete`
-            )
+                            th STT
+                            th Tiêu Đề
+                            th Mô Tả
+                            th Hành Động
+
+                    tbody
+                        if roles
+                            each item, index in roles
+                                tr
+                                    td #{index+1}
+                                    td #{item.title}
+                                    td !{item.description}
+                                    td
+                                        .d-flex
+                                            a(
+                                                href = `${prefixAdmin}/roles/detail/${item.id}`
+                                                type="button"
+                                                class="btn btn-secondary btn-sm me-2"
+                                            ) Chi Tiết
+                                            if (role.permission.includes("roles_edit"))
+                                                a(
+                                                    href = `${prefixAdmin}/roles/edit/${item.id}`
+                                                    type="button"
+                                                    class="btn btn-warning btn-sm me-2"
+                                                ) Sửa
+                                            if (role.permission.includes("roles_delete"))
+                                                button(
+                                                    type="button"
+                                                    class="btn btn-danger btn-sm"
+                                                    button-delete
+                                                    data-id=item.id
+                                                ) Xóa
+                        else
+                            tr
+                                td(colspan="4" class="text-center") Không có dữ liệu
+
+                form(
+                    action=""
+                    method="POST"
+                    id="form-delete-item"
+                    data-path=`${prefixAdmin}/roles/delete`
+                )
     // product
     script(src = '/admin/js/role.js')

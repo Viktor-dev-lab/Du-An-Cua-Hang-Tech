@@ -8,53 +8,55 @@ block header
 
 block main
     .main-content
-        include ../../partials/header.pug
+        if (role.permission.includes("products-category_view"))
+            include ../../partials/header.pug
 
-        .card.mb-3
-            .card-header Danh sách
-            .card-body
-                .row
-                    .col-8
-                    .col-4
-                        a(
-                            href=`${prefixAdmin}/products-category/create`
-                            class="btn btn-outline-success"
-                        ) + Thêm mới
+            .card.mb-3
+                .card-header Danh sách
+                .card-body
+                    .row
+                        .col-8
+                        .col-4
+                            if (role.permission.includes("products-category_create"))
+                                a(
+                                    href=`${prefixAdmin}/products-category/create`
+                                    class="btn btn-outline-success"
+                                ) + Thêm mới
 
 
-        .card.mb-5(style="--bs-card-spacer-y: 3rem; --bs-card-spacer-x: 3rem;")
-            .card-header(style=" --bs-card-cap-padding-y: 2rem; display: flex; align-items: center; justify-content: center;")
-                span.card-title Danh Mục Sản Phẩm
-            .card-body
-                +form-change-multi(
-                    `${prefixAdmin}/products-category/change-multi?_method=PATCH`, 
-                    [
-                        { value: 'active', text: 'Hoạt động' },
-                        { value: 'inactive', text: 'Dừng hoạt động' },
-                        { value: 'delete-all', text: 'Xóa tất cả' },
-                        { value: 'change-position', text: 'Thay đổi vị trí' }
-                    ],
-                    [
-                        { href: `${prefixAdmin}/products-category/restore`, class: 'btn btn-outline-secondary', text: 'Phục hồi' },
-                        { href: `${prefixAdmin}/products-category/create`, class: 'btn btn-outline-success', text: '+ Thêm mới' }
-                    ]
-                )
+            .card.mb-5(style="--bs-card-spacer-y: 3rem; --bs-card-spacer-x: 3rem;")
+                .card-header(style=" --bs-card-cap-padding-y: 2rem; display: flex; align-items: center; justify-content: center;")
+                    span.card-title Danh Mục Sản Phẩm
+                .card-body
+                    +form-change-multi(
+                        `${prefixAdmin}/products-category/change-multi?_method=PATCH`, 
+                        [
+                            { value: 'active', text: 'Hoạt động' },
+                            { value: 'inactive', text: 'Dừng hoạt động' },
+                            { value: 'delete-all', text: 'Xóa tất cả' },
+                            { value: 'change-position', text: 'Thay đổi vị trí' }
+                        ],
+                        [
+                            { href: `${prefixAdmin}/products-category/restore`, class: 'btn btn-outline-secondary', text: 'Phục hồi' }
+                        ]
+                    )
 
-                table(class="table table-hover table-sm align-middle custom-table" checkbox-multi)
-                    thead.table-light.custom-thead
-                        tr
-                            th
-                                input(type="checkbox" name="checkall")
-                            th STT
-                            th Hình Ảnh
-                            th Tiêu Đề
-                            th Giá
-                            th Sắp Xếp
-                            th Trạng Thái
-                            th Hành Động
-                    tbody
-                        +table-tree(records)
-                        
+                    table(class="table table-hover table-sm align-middle custom-table" checkbox-multi)
+                        thead.table-light.custom-thead
+                            tr
+                                th
+                                    input(type="checkbox" name="checkall")
+                                th STT
+                                th Hình Ảnh
+                                th Tiêu Đề
+                                th Giá
+                                th Sắp Xếp
+                                th Trạng Thái
+                                th Hành Động
+                        tbody
+                            +table-tree(records)
+        else
+            h1 Bạn không có quyền truy cập vào phần này             
 
     // product
     script(src = '/admin/js/category.js')

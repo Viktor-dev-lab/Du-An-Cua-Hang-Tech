@@ -7,6 +7,7 @@ const flash = require('express-flash') // Thư viện để thông báo một s�
 const session = require('express-session') // Thư viện để thông báo một sự kiện
 const cookieParser = require('cookie-parser') // Thư viện để thông báo một sự kiện
 const path = require('path');
+const dayjs = require('dayjs');
 
 database.connect() // gọi hàm connect để connect
 
@@ -38,6 +39,7 @@ routeAdmin(app)
 
 // Biến toàn cục cho toàn bộ ứng dụng
 app.locals.prefixAdmin = systemConfig.prefixAdmin
+app.locals.dayjs = dayjs; 
 
 
 // Cấu hình server để lắng nghe tất cả địa chỉ IP

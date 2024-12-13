@@ -1,0 +1,5 @@
+mixin formatDayTime(time)
+   span #{dayjs(Number(time)).format('DD-MM-YYYY')}
+
+mixin formatHourTime(time)
+   span #{dayjs(Number(time)).format('HH:mm:ss')}
