@@ -111,3 +111,51 @@ a {
 a:hover {
 text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
 }
+
+/* Sub-menu */
+.sub-menu {
+    position: relative;
+    z-index: 999;
+}
+
+.sub-menu ul {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #eeeecc;
+    display: none;
+    border: 1px solid #ddd;
+    min-width: 180px
+}
+
+.sub-menu ul li {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+    font-size: 20px;
+}
+
+
+.sub-menu:hover > ul {
+    display: block;
+}
+
+.sub-menu ul li:hover {
+    background: #b8a969; /* Đổi màu khi hover vào từng mục */
+}
+
+.sub-menu ul li {
+    position: relative;
+}
+
+.sub-menu ul li ul {
+    right: 100%;
+    top: 0;
+}
+
+.sub-menu ul li:hover > ul {
+    display: block;
+}

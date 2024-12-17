@@ -9,13 +9,13 @@ const rateLimit = require('express-rate-limit');
 //     message: 'Too many requests, please try again later.',
 // });
 
+// MiddleWare
+const categoryMiddleware = require("../../middlewares/client/category.middleware.js");
+
 module.exports = (app) => {
+    app.use(categoryMiddleware.category);
+
     app.use('/',homeRoutes)
-    // Do bên productRoutes đã dùng get rồi nên mình chỉ cần dùng lại sử dụng use
-    // Đường dẫn nối chuỗi 2 bên
-    // Như /products/
-    // /products/create
-    // /products/delete
     app.use("/products",productRoutes)
 }
 
