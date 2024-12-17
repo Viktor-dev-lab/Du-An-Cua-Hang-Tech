@@ -1,11 +1,11 @@
 mixin formatDayTime(time)
-   span #{dayjs(Number(time)).format('DD-MM-YYYY')}
+   span #{dayjs((time)).format('DD-MM-YYYY')}
 
 mixin formatDayTimeString(time)
    span #{dayjs(time).format('DD-MM-YYYY')}
 
 mixin formatHourTime(time)
-   span #{dayjs(Number(time)).format('HH:mm:ss')}
+   span #{dayjs((time)).format('HH:mm:ss')}
 
 mixin formatHourTimeString(time)
    span #{dayjs(time).format('HH:mm:ss')}

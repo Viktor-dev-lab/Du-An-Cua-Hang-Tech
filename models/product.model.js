@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema({
         unique: true
     },
     createdBy: {
-        account_id: String,
+        account_id: Date,
         createAt:{
             type: String,
             default: Date.now
@@ -43,6 +43,15 @@ const productSchema = new mongoose.Schema({
             default: Date
         }
     },
+    updatedBy: [
+        {
+            account_id: String,
+            updateAt:{
+                type: Date,
+                default: Date
+            }
+        }
+    ],
     position: Number
 }, {
     timestamps: true

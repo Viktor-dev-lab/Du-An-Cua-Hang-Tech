@@ -8,6 +8,11 @@ header
             span.las.la-chart-line
    .header-action 
       a(
+         href=`${prefixAdmin}/my-account`
+         class="btn btn-primary"
+         style="margin-right: 1rem"
+      ) #{user.fullName}
+      a(
          href=`${prefixAdmin}/auth/logout`
-         class="btn btn-danger btn-sm"
+         class="btn btn-danger"
       ) Đăng Xuất

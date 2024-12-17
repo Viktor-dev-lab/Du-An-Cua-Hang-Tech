@@ -1,0 +1,95 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+
+block header
+  link(rel="stylesheet", href="../../../admin/css/product-create.css")
+
+block main
+    .main-content
+        +alert-success(3000)
+        +alert-error(3000)
+        include ../../partials/header.pug
+        .card.mb-5(style="--bs-card-spacer-y: 2rem; --bs-card-spacer-x: 2rem;")
+            .card-header(style="display: flex; align-items: center; justify-content: center;")
+                span.card-title Chỉnh Sửa Nhóm Quyền
+            .card-body
+                form(
+                    action=`${prefixAdmin}/my-account/edit/?_method=PATCH`
+                    method="POST"
+                    class="form-create-product"
+                )
+                    div(class="form-group mb-3")
+                        label(for="fullName" class="fw-bold") Họ Tên
+                            input(
+                                type="text"
+                                class="form-control"
+                                id="fullName"
+                                name="fullName"
+                                required
+                                value=user.fullName
+                            )
+                    div(class="form-group mb-3")
+                        label(for="email" class="fw-bold") Email
+                            input(
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                required
+                                value=user.email
+                            )
+                    div(class="form-group mb-3")
+                        label(for="password" class="fw-bold") Mật Khẩu
+                            input(
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                            )
+                    div(class="form-group mb-3")
+                        label(for="phone" class="fw-bold") Số điện thoại
+                            input(
+                                type="text"
+                                class="form-control"
+                                id="phone"
+                                name="phone"
+                                required
+                                value=user.phone
+                            )
+
+                    div(
+                        class="form-group" 
+                        upload-image
+                    )
+                        label(for="thumbnail") Ảnh
+                        input(
+                            type="file"
+                            class="form-control-file"
+                            id="thumbnail"
+                            name="thumbnail"
+                            accept="image/*"
+                            upload-image-input
+                        )
+                        div(style="position: relative; display: inline-block;")
+                            button(
+                                type="button"
+                                class="btn btn-danger"
+                                style="position: absolute; top: 0; left: 0; z-index: 1; display: none;"
+                                id="removeButton"
+                            )
+                                i(class="fa fa-times") 
+                            img(
+                                src= user.avatar
+                                upload-image-preview
+                                id="imagePreview"
+                                style="display: block;"
+                            )
+
+                    div(class="form-group")
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Chỉnh Sửa
+
+    // product
+    script(src = '/admin/js/role.js')

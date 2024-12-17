@@ -69,6 +69,7 @@ block main
                                     th Tiêu Đề
                                     th Giá
                                     th Người Tạo
+                                    th Người Sửa
                                     th Sắp Xếp
                                     th Trạng Thái
                                     th Hành Động
@@ -98,6 +99,14 @@ block main
                                                     +formatDayTime(item.createdBy.createAt)
                                                     br
                                                     +formatHourTime(item.createdBy.createAt)
+                                        td 
+                                            -  const updatedBy = item.updatedBy.slice(-1)[0];
+                                            if (updatedBy)
+                                                p #{updatedBy.Name}
+                                                p
+                                                    +formatDayTime(item.updatedBy.updateAt)
+                                                    br
+                                                    +formatHourTime(item.updatedBy.updateAt)
 
                                         td 
                                             form(

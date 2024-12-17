@@ -1,0 +1,48 @@
+extends ../../layout/default.pug
+
+block main
+    .main-content
+        include ../../partials/header.pug
+        .container
+            .row
+                .col-md-12
+                    .card
+                        .card-header
+                            h3 Thông tin cá nhân
+                        .card-body
+                            .row
+                                .col-md-6
+                                    .form-group
+                                        label(class="font-weight-bold h5") Tên
+                                        p #{user.fullName}
+                                .col-md-6
+                                    .form-group
+                                        label(class="font-weight-bold h5") Email
+                                        p #{user.email}
+                            .row
+                                .col-md-6
+                                    .form-group
+                                        label(class="font-weight-bold h5") Số điện thoại
+                                        p #{user.phone}
+                                .col-md-6
+                                    .form-group
+                                        label(class="font-weight-bold h5") Trạng thái 
+                                        div.mt-2
+                                            if user.status == "active"
+                                                span(
+                                                    class="badge bg-success text-white status-badge"
+                                                )  Hoạt Động
+                                            else
+                                                span(
+                                                    class="badge bg-warning text-dark status-badge"
+                                                ) Dừng Hoạt Động
+                            .row
+                                .col-md-6
+                                    .form-group
+                                        if role.title
+                                            label(class="font-weight-bold h5") Phân quyền
+                                            p #{role.title}
+                            .form-group
+                                .btn-group
+                                    a(href=`${prefixAdmin}/my-account/edit`, class="btn btn-primary btn-lg") Cập nhật thông tin
+                                    a(href=`${prefixAdmin}/auth/logout`, class="btn btn-danger btn-lg ml-2") Đăng Xuất
