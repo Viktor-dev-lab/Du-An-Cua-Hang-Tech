@@ -20,6 +20,7 @@ const productSchema = new mongoose.Schema({
     thumbnail: String,
     images: Array,
     status: String,
+    featured: String,
     slug: {
         type: String,
         slug: "title",

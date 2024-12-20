@@ -6,7 +6,7 @@ const controller = require('../../controllers/client/product.controller')
 route.get('/',controller.index)
 route.get('/delete',controller.delete)
 route.get('/create',controller.create)
-route.get('/:slug',controller.detail)
-
+//route.get('/:slug',controller.detail)
+route.get('/:slugCategory',controller.category)
 
 module.exports = route

@@ -21,7 +21,7 @@ block main
           if product.price
             | #{product.price}
         if product.description
-          p= product.description
+          | !{product.description}
         h5 Color Options
         .color.flex1
           span(style="background: #000;")
