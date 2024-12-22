@@ -23,7 +23,22 @@ const productCategorySchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    deletedAt: Date,
+    deletedBy: {
+        account_id: String,
+        deleteAt:{
+            type: String,
+            default: Date
+        }
+    },
+    updatedBy: [
+        {
+            account_id: String,
+            updateAt:{
+                type: Date,
+                default: Date
+            }
+        }
+    ],
 }, {
     timestamps: true
 });

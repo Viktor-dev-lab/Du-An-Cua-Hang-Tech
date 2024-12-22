@@ -27,6 +27,11 @@
     padding: 30px;
 }
 
+.product-detail .center{
+    width: 100%;
+    padding: 30px;
+}
+
 .product-detail .flex {
     display: flex;
     justify-content: space-between;
@@ -73,24 +78,58 @@
 .product-detail h3 {
     color: #af827d;
     margin: 20px 0;
-    font-size: 25px;
+    font-size: 45px;
 }
 
 .product-detail h4 {
-    color: red;
-}
-
-.product-detail p {
-    margin: 20px 0 30px;
-    line-height: 25px;
-    color: #837D7C;
+    color: green;
+    margin: 20px 0;
+    font-size: 45px;
 }
 
 .product-detail h5 {
-    font-size: 15px;
-    margin: 15px 0;
-    color: #837D7C;
+    color: red;
+    margin: 20px 0;
+    font-size: 25px;
+    text-decoration: line-through; /* Gạch ngang giá cũ */
 }
+
+.product-detail h6 {
+    margin: 15px 0;
+    font-size: 20px;
+}
+
+/* Nút đặt hàng */
+/* Form Styles */
+.product-detail form {
+    margin-top: 20px;
+    display: flex; /* Căn ngang các thành phần */
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa các phần tử trong form */
+}
+/* Style for input */
+.product-detail form .form-control {
+    flex: 1; /* Input chiếm hết không gian còn lại */
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Đảm bảo padding và border không làm thay đổi chiều rộng */
+}
+
+/* Button Style */
+.product-detail form .btn {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+/* Nút đặt hàng */
+
 
 .product-detail .color span {
     width: 25px;
@@ -128,4 +167,32 @@
 .product-detail .badge-danger {
     background-color: #dc3545; /* Màu nền đỏ */
     color: #fff; /* Màu chữ trắng */
+}
+
+/* Thẻ a danh mục  */
+/* Inner Category Styles */
+.inner-category {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #333; /* Màu chữ chính */
+    font-weight: 500; /* Làm chữ đậm vừa phải */
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 5px; /* Khoảng cách giữa các phần tử */
+}
+
+.inner-category span {
+    color: #555; /* Màu chữ của tiêu đề "Danh mục" */
+    font-weight: bold;
+}
+
+.inner-category a {
+    color: #007BFF; /* Màu xanh dương cho liên kết */
+    text-decoration: none; /* Bỏ gạch chân */
+    transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+}
+
+.inner-category a:hover {
+    color: #0056b3; /* Màu xanh đậm hơn khi hover */
+    text-decoration: underline; /* Thêm gạch chân khi hover */
 }

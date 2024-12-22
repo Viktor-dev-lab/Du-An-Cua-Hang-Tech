@@ -1,6 +1,7 @@
 extends ../../layout/default.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/table-tree.pug
+include ../../mixins/alert.pug
 
 
 block header
@@ -10,6 +11,7 @@ block main
     .main-content
         if (role.permission.includes("products-category_view"))
             include ../../partials/header.pug
+            +alert-success(5000)
 
             .card.mb-3
                 .card-header Danh sách

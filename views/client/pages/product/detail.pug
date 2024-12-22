@@ -1,4 +1,5 @@
 extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
 
 block header
   link(rel="stylesheet", href="/css/product-detail.css")
@@ -16,13 +17,22 @@ block main
               img(src=image alt="Option Image" onclick=`img('${image}')`)
       .right
         h3= product.title
+
+        if (product.category)
+          div(class="inner-category")
+            span Danh mục: 
+            a(href=`/products/${product.category.slug}`) #{product.category.title}
+
         h4
-          small $
           if product.price
-            | #{product.price}
-        if product.description
-          | !{product.description}
-        h5 Color Options
+            | #{product.price}$
+
+        h5
+          small $
+          if product.priceNew
+            | #{product.priceNew}
+
+        h6 Color Options
         .color.flex1
           span(style="background: #000;")
           span(style="background: #EDEDED;")
@@ -31,36 +41,62 @@ block main
           span(style="background: #AB8ED1;")
           span(style="background: #F04D44;")
         if product.Quantity
-          h5 
+          h6 
             small Quantity: 
             | #{product.stock}
         if product.discountPercentage
-          h5 
+          h6 
             small Discount: 
             | #{product.discountPercentage}%
         if product.rating
-          h5
+          h6
             small Rating: 
             | #{product.rating} / 5
         if product.status
-          h5
+          h6
             small Status: 
             if product.status === "active"
               span(class="badge badge-success") Hoạt Động
             else
               span(class="badge badge-danger") Dừng Hoạt Động
         if product.updateAt
-          h5
+          h6
             small Updated At: 
             | #{new Date(product.updatedAt).toLocaleString()}
         if product.brand
-          h5
+          h6
             small Brand: 
             | #{product.brand}
-        if product.category
-          h5
-            small Category: 
-            | #{product.category}
+        if product.stock
+          div(class="inner-stock") 
+          h6
+            |Còn lại <span>#{product.stock}</span> Sản phẩm
+
+        form(
+          action=`/cart/add/${product._id.toString()}`
+          method="POST"
+        )
+          input(
+            class="form-control"
+            type="number"
+            name="quantity"
+            value="1"
+            min="1"
+            max=product.stock 
+          )
+          button(
+            type="submit"
+            class="btn btn-success btn-block"
+          ) Thêm vào giỏ hàng
+
+
+  .product-detail
+    section
+      .container.flex
+        .center
+          +box-head("Mô Tả Sản Phẩm")
+          if product.description
+            | !{product.description}
 
     script.
       function img(anything) {

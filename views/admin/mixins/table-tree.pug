@@ -31,6 +31,12 @@ mixin table-tree(items, level=0)
                         style="width: 50px;"
                     )
             td
+                form(
+                    action=""
+                    method="POST"
+                    id="form-change-status"
+                    data-path=`${prefixAdmin}/products-category/change-status`
+                )
                 if (role.permission.includes("products-category_edit"))
                     if item.status == "active"
                         a(
@@ -75,6 +81,13 @@ mixin table-tree(items, level=0)
                             type="button"
                             class="btn btn-warning btn-sm me-2"
                         ) Sửa    
+
+                    form(
+                        action=""
+                        method="POST"
+                        id="form-delete-item"
+                        data-path=`${prefixAdmin}/products-category/delete`
+                    )
                     if (role.permission.includes("products-category_delete"))                  
                         button(
                             type="button"

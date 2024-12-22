@@ -1,6 +1,6 @@
 // Models
 const Product = require("../../models/product.model.js");
-const Category = require("../../models/product-category.model.js");
+const ProductCategory = require("../../models/product-category.model.js");
 
 // Helpers
 const productHelper = require('../../helpers/product.js');
@@ -39,19 +39,42 @@ module.exports.create = (req, res) => {
     res.render("client/pages/product/index.pug")
 }
 
-// [GET] /products/:slug
+// [GET] /products/detail/:slugProduct
 module.exports.detail = async (req, res) => {
-    const slug = req.params.slug
-    const product = await Product.findOne({ slug: slug });
+    try{
+        const slug = req.params.slugProduct;
+        const find = {
+            deleted: false,
+            slug: slug,
+            status: "active"
+        };
+    
+        const product = await Product.findOne(find).lean();
 
-    res.render("client/pages/product/detail.pug", {
-        pageTitle: product.title,
-        product: product
-    });
+        if (product.product_category_id){
+            const category = await ProductCategory.findOne({
+                _id: product.product_category_id,
+                status: "active",
+                deleted: false
+            });
+            product.category = category;
+        }
+
+        product.priceNew = productHelper.priceNewProduct(product);
+
+    
+        res.render("client/pages/product/detail.pug", {
+            pageTitle: product.title,
+            product: product
+        });
+    } catch(error){
+        console.log(error);
+        res.redirect(`/products`);
+    }
 }
 
 module.exports.category = async (req, res) => {
-    const category = await Category.findOne({
+    const category = await ProductCategory.findOne({
         slug: req.params.slugCategory,
         deleted: false
     });

@@ -3,6 +3,7 @@ const ProductCategory = require("../../models/product-category.model");
 
 // prefix address
 const systemConfig = require('../../config/system.js');
+const mongoose = require('mongoose');
 
 // Helpers
 const paginationHelpers = require("../../helpers/pagination.js");
@@ -78,7 +79,7 @@ module.exports.edit = async (req, res) => {
     }
 };
 
-// [PATC] admin/products-category/edit/:id
+// [PATCH] admin/products-category/edit/:id
 module.exports.editPatch = async (req, res) => {
 
     const id = req.params.id;
@@ -86,4 +87,47 @@ module.exports.editPatch = async (req, res) => {
     
     await ProductCategory.updateOne({_id:id},req.body);
     res.redirect('back');
+};
+
+// [DELETE] admin/products-category/delete/:id
+module.exports.delete = async (req, res) => {
+
+    const id = req.params.id;
+    await ProductCategory.updateOne(
+        { _id: { $in: id } }, 
+        {
+            deleted: true,
+            deletedBy: {
+                account_id: res.locals.user.id,
+                deleteAt: new Date()
+            }
+        }
+    );
+    req.flash('success', `Xóa sản phẩm thành công`);
+};
+
+
+// [PATCH] admin/products-category/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+    const newStatus = req.params.status;
+    console.log(newStatus);
+    const Id = req.params.id;
+    const update = {
+        account_id: res.locals.user.id,
+        updateAt: new Date()
+    }
+
+    // Chuyển đổi Id từ string sang ObjectId
+    const newId = new mongoose.Types.ObjectId(Id);
+
+    try {
+        // Cập nhật trạng thái của sản phẩm
+        await ProductCategory.updateOne({ _id: newId }, { status: newStatus, $push: {updatedBy: update}});
+        req.flash('success', 'Cập nhật sản phẩm thành công');
+        // Chuyển hướng trở lại trang trước đó sau khi cập nhật thành công
+        res.redirect("back");
+    } catch (error) {
+        console.error("Error updating product status:", error);
+        res.status(500).send("Có lỗi xảy ra khi cập nhật trạng thái sản phẩm.");
+    }
 };

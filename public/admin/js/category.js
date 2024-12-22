@@ -135,3 +135,53 @@ if (formChangeMulti) {
 }
 
 // End Form Change Multi
+
+
+// Delete Item
+const buttonDelete = document.querySelectorAll("[button-delete]");
+if (buttonDelete.length > 0) {
+    const formDeleteItem = document.querySelector("#form-delete-item");
+    const path = formDeleteItem.getAttribute("data-path");
+
+    buttonDelete.forEach(button => {
+        button.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa sản phẩm?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#d33', // Màu cho nút "Xóa"
+                cancelButtonColor: '#3085d6' // Màu cho nút "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const id = button.getAttribute("data-id");
+                    const action = `${path}/${id}?_method=DELETE`;
+                    formDeleteItem.action = action;
+                    formDeleteItem.submit();
+                }
+            });
+        });
+    });
+}
+
+// Start Change-Status
+const buttonsChangeStatus = document.querySelectorAll("[button-change-status]");
+if (buttonsChangeStatus.length > 0) {
+    const formChangeStatus = document.querySelector("#form-change-status");
+    const path = formChangeStatus.getAttribute("data-path");
+
+    buttonsChangeStatus.forEach(button => {
+        button.addEventListener("click", () => {
+            const statusCurrent = button.getAttribute("data-status");
+            const id = button.getAttribute("data-id");  
+
+            let statusChange = (statusCurrent == "active") ? "inactive" : "active";
+
+            const action = path + `/${statusChange}/${id}?_method=PATCH`;
+            formChangeStatus.action = action;
+            formChangeStatus.submit();
+            //.submit() giúp tự động gửi một biểu mẫu từ mã JavaScript mà không cần người dùng thực hiện hành động gửi thủ công (như nhấp vào nút "Submit").
+        });
+    });
+}
