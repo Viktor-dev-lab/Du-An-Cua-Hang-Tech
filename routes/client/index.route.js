@@ -1,5 +1,6 @@
 const productRoutes = require('./product.route')
 const homeRoutes = require('./home.route')
+const searchRoutes = require('./search.route')
 const rateLimit = require('express-rate-limit');
 
 // // Configure the rate limiter to use Redis store
@@ -17,6 +18,6 @@ module.exports = (app) => {
 
     app.use('/',homeRoutes)
     app.use("/products",productRoutes)
-    
+    app.use("/search",searchRoutes)
 }
 
