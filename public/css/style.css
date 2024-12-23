@@ -173,3 +173,70 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
 .sub-menu ul li:hover > ul {
     display: block;
 }
+
+
+/* Phần thông báo */
+[show-alert] {
+    position: fixed;
+    top: -100px;
+    right: 15px;
+    z-index: 999;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+[show-alert].alert-visible {
+    top: 70px;
+    opacity: 1;
+    animation: slide-down 0.5s ease-in-out forwards;
+}
+
+[show-alert].alert-hidden {
+    top: -100px;
+    opacity: 0;
+    animation: slide-up 0.5s ease-in-out forwards;
+}
+
+@keyframes slide-down {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+
+    to {
+        top: 70px;
+        opacity: 1;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        top: 70px;
+        opacity: 1;
+    }
+
+    to {
+        top: -100px;
+        opacity: 0;
+    }
+}
+
+[show-alert] [close-alert] {
+    background: #fff;
+    color: #000;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+[show-alert] [close-alert]:hover {
+    background: #f00;
+    color: #fff;
+}
