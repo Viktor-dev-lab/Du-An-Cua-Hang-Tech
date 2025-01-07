@@ -240,3 +240,20 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
     background: #f00;
     color: #fff;
 }
+
+/* button-go-back */
+.btn[button-go-back] {
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn[button-go-back]:hover {
+    background-color: #5a6268; /* Màu khi hover */
+    color: #fff; /* Màu chữ khi hover */
+  }
+  
