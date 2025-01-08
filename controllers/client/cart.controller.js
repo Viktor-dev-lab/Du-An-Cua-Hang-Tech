@@ -25,7 +25,7 @@ module.exports.index = async (req, res) => {
     cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0);
 
     res.render("client/pages/cart/index.pug", {
-        pageTitle: "Trang chủ",
+        pageTitle: "Giỏ Hàng",
         cartDetails: cart
     })
 }
