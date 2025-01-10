@@ -8,11 +8,13 @@ const userroutRoutes = require('./user.route.js')
 // MiddleWare
 const categoryMiddleware = require("../../middlewares/client/category.middleware.js");
 const cartMiddleware = require("../../middlewares/client/cart.middleware.js")
+const userMiddleware = require("../../middlewares/client/user.middleware.js")
 
 module.exports = (app) => {
     // Run first middleware
     app.use(categoryMiddleware.category); // Danh muc
     app.use(cartMiddleware.cartId); // Gio Hang
+    app.use(userMiddleware.infoUser); // User
 
     // After route 
     app.use('/',homeRoutes)
