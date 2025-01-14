@@ -1,0 +1,106 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+
+block header
+    link(rel="stylesheet", href="../../../admin/css/showImage.css")
+
+block main
+    .main-content.container
+        if (role.permission.includes("roles_view"))
+            include ../../partials/header.pug
+        +alert-success(5000)
+        +alert-error(5000)
+        h1.mb-4 Cài đặt hệ thống
+        form(
+            action=`${prefixAdmin}/settings/general?_method=PATCH`
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            .row.mb-3
+                .col-md-6
+                    label(for="websiteName", class="form-label") Tên website
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="websiteName"
+                        name="websiteName"
+                        placeholder="Nhập tên website"
+                        value=(settingGeneral ? settingGeneral.websiteName : "")
+                    )
+            .row.mb-3
+                .col-md-6
+                    label(for="phone", class="form-label") Số điện thoại
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="phone"
+                        name="phone"
+                        placeholder="Nhập số điện thoại"
+                         value=(settingGeneral ? settingGeneral.phone : "")
+                    )
+                .col-md-6
+                    label(for="email", class="form-label") Email
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="Nhập email"
+                         value=(settingGeneral ? settingGeneral.email : "")
+                    )
+            .row.mb-3
+                .col-md-12
+                    label(for="address", class="form-label") Địa chỉ
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        name="address"
+                        placeholder="Nhập địa chỉ"
+                         value=(settingGeneral ? settingGeneral.address : "")
+                    )
+            .row.mb-3
+                .col-md-12
+                    div(class="form-group d-flex align-items-center gap-3" upload-image)
+                        label(for="logo" class="me-3 mb-0") Ảnh
+                        input(
+                            type="file"
+                            class="form-control-file"
+                            id="logo"
+                            name="logo"
+                            accept="image/*"
+                            upload-image-input
+                        )
+                        div(style="position: relative; display: inline-block;")
+                            button(
+                                type="button"
+                                class="btn btn-danger p-0"
+                                style="position: absolute; top: 0; left: 0; z-index: 100; display: none;"
+                                id="removeButton"
+                            )
+                                i(class="fa fa-times") 
+                            img(
+                                src=(settingGeneral ? settingGeneral.logo : "")
+                                upload-image-preview
+                                id="imagePreview"
+                                style="display: block;"
+                            )
+
+            .row.mb-3
+                .col-md-12
+                    label(for="copyright", class="form-label") Copyright
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="copyright"
+                        name="copyright"
+                        placeholder="Nhập thông tin bản quyền"
+                        value=(settingGeneral ? settingGeneral.copyright : "")
+                    )
+            .row.mt-4
+                .col-md-12.text-end
+                    button(
+                        type="submit"
+                        class="btn btn-primary"
+                    ) Cập nhật
+      

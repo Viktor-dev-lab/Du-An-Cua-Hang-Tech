@@ -260,3 +260,69 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
     color: #fff; /* Màu chữ khi hover */
   }
   
+
+  /* info */
+  .card-header {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border-radius: 10px 10px 0 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .card-body {
+    background: #f8f9fa;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .avatar-preview {
+    border: 3px solid #007bff;
+    padding: 5px;
+    background-color: #ffffff;
+  }
+  
+  .info-section label {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  input.form-control,
+  select.form-control {
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+  }
+  
+  input.form-control:focus,
+  select.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  input.form-control-file {
+    margin-top: 1rem;
+  }
+  
+  .btn-outline-primary {
+    border: 2px solid #007bff;
+    color: #007bff;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-outline-primary:hover {
+    background: #007bff;
+    color: #fff;
+  }
+  
+  .btn-outline-danger {
+    border: 2px solid #dc3545;
+    color: #dc3545;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-outline-danger:hover {
+    background: #dc3545;
+    color: #fff;
+  }
+  
+  /* info */

@@ -1,0 +1,87 @@
+/* Căn giữa và cải thiện hình ảnh xem trước */
+[upload-image-preview] {
+    width: 350px; /* Giới hạn kích thước hình ảnh */
+    height: auto;
+    display: block;
+    margin: 20px auto; /* Căn giữa và tạo khoảng cách trên/dưới */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd; /* Viền nhẹ cho ảnh */
+    padding: 10px;
+    background-color: #f9f9f9; /* Nền nhạt làm nổi bật ảnh */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hiệu ứng hover cho ảnh xem trước */
+[upload-image-preview]:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Nút xóa ảnh */
+#removeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    background-color: #ff4c4c;
+    color: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Biểu tượng trong nút xóa */
+#removeButton i {
+    font-size: 16px;
+}
+
+/* Hiệu ứng hover cho nút xóa */
+#removeButton:hover {
+    background-color: #d9534f; /* Màu đỏ đậm hơn khi hover */
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+/* Định dạng nhóm form */
+.form-group {
+    text-align: left;
+    margin-bottom: 20px; /* Khoảng cách giữa các form group */
+}
+
+/* Định dạng thanh chọn file */
+input[type="file"].form-control-file {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px dashed #ccc; /* Viền dạng dashed */
+    border-radius: 8px;
+    background-color: #fefefe;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Hiệu ứng khi người dùng hover lên thanh chọn file */
+input[type="file"].form-control-file:hover {
+    border-color: #007bff; /* Đổi màu viền khi hover */
+}
+
+/* Nút chọn file */
+input[type="file"].form-control-file::file-selector-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Hiệu ứng hover cho nút chọn file */
+input[type="file"].form-control-file::file-selector-button:hover {
+    background-color: #0056b3;
+}

@@ -6,7 +6,7 @@ header.header
             .col-3
                 .inner-logo
                     a(href = "/")
-                        img(src = "/admin/images/logo.jpg", alt = "logo")
+                        img(src = `${settingGeneral.logo}`, alt = "logo")
 
             .col-5 
                 form(
@@ -41,7 +41,7 @@ header.header
                             li
                                 a(href="/user/logout") Đăng xuất
                             li
-                                a(href="/user") #{user.fullName}
+                                a(href="/user/info") #{user.fullName}
                         else
                             li
                                 a(href="/user/register") Đăng Ký

@@ -1,0 +1,47 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-grid.pug
+include ../../../admin/mixins/alert.pug
+
+block main
+  +alert-success(5000)
+  +alert-error(5000)
+
+  .container.my-5
+    .row.justify-content-center
+      .col-lg-10
+        .card.shadow-lg.border-0
+          .card-header.text-center.bg-primary.text-white.py-3.rounded-top
+            h3.mb-0 Thông Tin Cá Nhân
+          .card-body.p-5.bg-light.rounded-bottom
+            form.d-flex.flex-wrap.g-4(method="POST", action="/user/update", enctype="multipart/form-data")
+              // Avatar Section
+              .col-lg-3.d-flex.flex-column.align-items-center
+                img.avatar-preview.rounded-circle.shadow-lg.mb-3(src="/uploads/avatars/#{user.avatar || 'default-avatar.jpg'}", alt="User Avatar", width="150", height="150")
+                input.form-control-file(type="file", name="avatar", accept="image/*")
+              
+              // Info Section
+              .col-lg-9
+                .row
+                  .col-lg-6.mb-3
+                    label.fw-bold.text-primary.mb-1(for="fullName") Full Name:
+                    input.form-control(type="text", id="fullName", name="fullName", value=user.fullName)
+                  .col-lg-6.mb-3
+                    label.fw-bold.text-primary.mb-1(for="email") Email:
+                    input.form-control(type="email", id="email", name="email", value=user.email, readonly)
+                  .col-lg-6.mb-3
+                    label.fw-bold.text-primary.mb-1(for="status") Status:
+                    select.form-control(id="status", name="status")
+                      option(value="active" selected=user.status === 'active') Active
+                      option(value="inactive" selected=user.status === 'inactive') Inactive
+                  .col-lg-6.mb-3
+                    label.fw-bold.text-primary.mb-1(for="createdAt") Created At:
+                    input.form-control(type="text", id="createdAt", value=user.createdAt.toLocaleString(), readonly)
+                  .col-lg-6.mb-3
+                    label.fw-bold.text-primary.mb-1(for="updatedAt") Updated At:
+                    input.form-control(type="text", id="updatedAt", value=user.updatedAt.toLocaleString(), readonly)
+              
+              // Action Buttons
+              .col-12.text-center.mt-4
+                button.btn.btn-outline-primary.rounded-pill.px-4.py-2(type="submit") Lưu Thay Đổi
+                a.btn.btn-outline-danger.rounded-pill.px-4.py-2.ms-3(href="/logout") Đăng Xuất
