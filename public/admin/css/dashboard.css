@@ -515,3 +515,63 @@ main {
     background: #f00;
     color: #fff;
 }
+
+/* 4 Bảng thông tin  */
+.wrapper-dashboard {
+    --primary-color: #4caf50;
+    --secondary-color: #f5f5f5;
+    --text-color: #333;
+    --border-radius: 8px;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --padding: 16px;
+}
+
+.wrapper-dashboard .row {
+    display: flex;
+    flex-wrap: wrap; /* Đảm bảo các cột xuống dòng khi hết không gian */
+    gap: 16px;
+}
+
+.wrapper-dashboard .col-md-6 {
+    flex: 0 0 calc(50% - 8px); /* Đảm bảo mỗi cột chiếm 50% */
+    max-width: calc(50% - 8px);
+}
+
+.wrapper-dashboard .card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.wrapper-dashboard .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wrapper-dashboard .card-header {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: var(--padding);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.wrapper-dashboard .card-body {
+    padding: var(--padding);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.wrapper-dashboard .card-body p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.wrapper-dashboard .card-body b {
+    color: var(--primary-color);
+}
+/* 4 Bảng thông tin  */
