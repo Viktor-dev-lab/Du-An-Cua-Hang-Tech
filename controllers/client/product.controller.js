@@ -79,8 +79,10 @@ module.exports.category = async (req, res) => {
         deleted: false
     });
 
-    const listSubCategory = await productCategpryHelper.getSubCategory(category.id);
-    const listSubCategoryID = listSubCategory.map(item => item.id);
+    if (category){
+        const listSubCategory = await productCategpryHelper.getSubCategory(category.id);
+        const listSubCategoryID = listSubCategory.map(item => item.id);
+    }
 
     const products = await Product.find({
         product_category_id: {$in: [category.id, ...listSubCategoryID]},
