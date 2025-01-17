@@ -41,6 +41,12 @@ routeAdmin(app)
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 app.locals.dayjs = dayjs; 
 
+// Xử Lý TH route ngoài lề thì 404
+app.get("*", (req,res) => {
+  res.render("client/pages/errors/404", {
+    pageTitle: "404 NOT FOUND",
+  });
+});
 
 // Cấu hình server để lắng nghe tất cả địa chỉ IP
 app.listen(port, '0.0.0.0', () => {
