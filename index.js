@@ -8,14 +8,19 @@ const session = require('express-session') // Thư viện để thông báo mộ
 const cookieParser = require('cookie-parser') // Thư viện để thông báo một sự kiện
 const path = require('path');
 const dayjs = require('dayjs');
+const http = require('http'); // Dùng để sài socket.io
 
 database.connect() // gọi hàm connect để connect
 
 const app = express() // Gọi hàm express() để khởi tạo một ứng dụng Express
+const { Server } = require("socket.io"); // Dùng để sài socket.io
 const port = process.env.PORT // Cổng 3000
 const routeClient = require('./routes/client/index.route.js') // Nhúng route client
 const routeAdmin = require('./routes/admin/index.route.js') // Nhúng route admin
-const systemConfig = require('./config/system.js')
+const systemConfig = require('./config/system.js') // Nhúng PATH_ADMIN 
+const server = http.createServer(app); // Dùng để sài socket.io
+const io = new Server(server); // Nhúng socket.io
+
 
 app.set("views", `${__dirname}/views`); // cài đặt chế độ hiển thị của pug trong thư mục views
 app.set("view engine", "pug"); // cài đặt template engine là pug
@@ -40,6 +45,7 @@ routeAdmin(app)
 // Biến toàn cục cho toàn bộ ứng dụng
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 app.locals.dayjs = dayjs; 
+global._io = io
 
 // Xử Lý TH route ngoài lề thì 404
 app.get("*", (req,res) => {
@@ -49,6 +55,6 @@ app.get("*", (req,res) => {
 });
 
 // Cấu hình server để lắng nghe tất cả địa chỉ IP
-app.listen(port, '0.0.0.0', () => {
+server.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://0.0.0.0:${port}`);
-  });
+});
