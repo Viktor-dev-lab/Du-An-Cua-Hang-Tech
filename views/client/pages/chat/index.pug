@@ -13,53 +13,16 @@ block main
 
       .row
         .col-12 
-          .chat
+          .chat(my-id=user.id)
             .inner-body 
-              .inner-incoming
-                .inner-name Em yêu 
-                .inner-content
-                  | A ơi sang nhà e nha. Em có món quà đặc biệt muốn dành tặng anh, hy vọng anh sẽ thích nhé!
+              each chat in chats
+                div(class=(chat.info.id == user.id ? "inner-outgoing" : "inner-incoming"))
+                  if (chat.info.id != user.id)
+                    .inner-name #{chat.info.fullName} 
+                  .inner-content
+                    | #{chat.content}
 
-              .inner-outgoing
-                .inner-content
-                  | Thế à? Anh đang bận chút, nhưng có lẽ sẽ qua ngay thôi. Em chờ anh một chút nhé.
-
-              .inner-incoming
-                .inner-name Em yêu 
-                .inner-content
-                  | Nhanh nha a. Em không muốn chờ lâu đâu, nhớ là phải nhanh thật nhanh đấy!
-
-              .inner-outgoing
-                .inner-content
-                  | A đến rồi nè. Em chuẩn bị gì thế? Có cần anh mang gì qua không?
-
-              .inner-incoming
-                .inner-name Em yêu 
-                .inner-content
-                  | Em đùa đó. Em chỉ muốn kiểm tra xem anh có nhớ em không thôi. Nhưng mà thật ra có quà đấy!
-
-              .inner-incoming
-                .inner-name Em yêu 
-                .inner-content
-                  | Anh có biết không, hôm nay em đã nấu món ăn mà anh thích nhất. Em chỉ chờ anh qua ăn cùng thôi.
-
-              .inner-outgoing
-                .inner-content
-                  | Ồ, thật hả? Vậy anh sẽ qua ngay đây. Chờ anh một chút thôi, khoảng 10 phút nữa nhé!
-
-              .inner-incoming
-                .inner-name Em yêu 
-                .inner-content
-                  | Nhanh lên nhé. Em đói rồi mà không muốn ăn một mình đâu.
-
-              .inner-incoming
-                .inner-name Em yêu 
-                .inner-content
-                  | À, em còn có món tráng miệng đặc biệt nữa. Nhưng anh phải đoán xem nó là gì!
-
-              .inner-outgoing
-                .inner-content
-                  | Chắc lại là bánh ngọt mà em hay làm đúng không? Anh đoán đúng rồi chứ?
+             
 
             .inner-foot 
               form(
