@@ -428,6 +428,7 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
 
 .chat-container .inner-form {
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 
@@ -466,5 +467,14 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
   color: #fff;
   font-size: 18px;
 }
-  
+
+.tooltip {
+  visibility: hidden; /* Ẩn phần tử nhưng vẫn giữ không gian */
+}
+
+.tooltip.shown{
+  visibility: visible; /* Hiển thị lại phần tử */
+  opacity: 1;
+}
+
   /* Chat */
