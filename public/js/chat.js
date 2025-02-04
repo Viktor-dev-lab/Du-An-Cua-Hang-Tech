@@ -33,8 +33,12 @@ if (formSendData){
 
         if (content || images.length > 0){
             // Send content or images on server
-            socket.emit("CLIENT_SEND_MESSAGE", content);
+            socket.emit("CLIENT_SEND_MESSAGE", {
+                content: content,
+                images: images
+            });
             e.target.elements.content.value = "";
+            upload.resetPreviewPanel();
             socket.emit("CLIENT_SEND_TYPING", "hidden");
         }
     });
@@ -42,6 +46,7 @@ if (formSendData){
 // CLIENT_SEND_MESSAGE
 
 // SERVER_RETURN_MESSAGE
+let viewer; // Lưu viewer để update sau này
 socket.on("SERVER_RETURN_MESSAGE", (data) => {
     const myId = document.querySelector("[my-id]").getAttribute("my-id");
     const body = document.querySelector(".chat .inner-body");
@@ -49,6 +54,9 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
     const BoxTyping = document.querySelector(".chat .inner-list-typing");
 
     let htmlFullName = "";
+    let htmlContent = "";
+    let htmlImages = "";
+    
     if (myId == data.userId){
         div.classList.add("inner-outgoing");
     } else {
@@ -56,12 +64,38 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
         htmlFullName = `<div class="inner-name">${data.fullName}</div>`;
     }
 
+    if (data.content){
+        htmlContent = `
+            <div class="inner-content">${data.content}</div>
+        `
+    }
+
+    if (data.images){
+        htmlImages += `<div class="inner-images">`;
+        for (const image of data.images){
+            htmlImages += `
+                <img src="${image}">
+            `
+        }
+        htmlImages += `</div>`;
+    }
+
     div.innerHTML = `
         ${htmlFullName}
-        <div class="inner-content">${data.content}</div>
+        ${htmlContent}
+        ${htmlImages}
     `
     body.insertBefore(div, BoxTyping);
     body.scrollTop = body.scrollHeight
+
+    // Nếu viewer chưa có, khởi tạo viewer
+    if (!viewer) {
+        viewer = new Viewer(document.querySelector(".chat .inner-body"), {
+            url: "src", // Đọc ảnh từ `src`
+        });
+    } else {
+        viewer.update(); // Cập nhật Viewer.js khi có ảnh mới
+    }
 });
 // SERVER_RETURN_MESSAGE
 

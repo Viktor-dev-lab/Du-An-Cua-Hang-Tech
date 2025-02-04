@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
         unique: true
     },
     createdBy: {
-        account_id: Date,
+        account_id: { type: String, required: true }, // Bắt buộc nhập id account
         createAt:{
             type: String,
             default: Date.now

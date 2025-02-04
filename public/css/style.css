@@ -476,6 +476,53 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
   visibility: visible; /* Hiển thị lại phần tử */
   opacity: 1;
 }
+
+/* Image */
+.chat .inner-body .inner-images img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  background: #e6e4e4;
+  padding: 10px;
+  margin: 10px 5px 5px 0;
+  border-radius: 5px;
+}
+
+.chat .inner-body .inner-outgoing .inner-images {
+  margin-left: auto;
+  text-align: right;
+}
+
+.chat .inner-body .inner-outgoing .inner-images img{
+  margin: 10px 0 5px 5px;
+}
+
+.chat .inner-preview-images {
+  position: relative;
+}
+
+.chat .inner-preview-images .label-container {
+  display: none;
+}
+
+.chat .inner-preview-images .input-container {
+  display: none;
+}
+
+.chat .inner-preview-images .image-preview {
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+}
+
+.chat .inner-preview-images .image-preview-item {
+  width: 90px;
+  background-size: contain;
+}
+
+/* Image */
+
+
   /* Chat */
 
   /* Start Typing */
@@ -524,5 +571,4 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
     opacity: 0.1;
   }
 }
-
   /* End Typing */

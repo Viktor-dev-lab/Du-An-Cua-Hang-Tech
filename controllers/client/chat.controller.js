@@ -1,6 +1,9 @@
 const Chat = require("../../models/chat.model");
 const User = require("../../models/user.model");
 
+// Clound
+const uploadCloundinary = require('../../helpers/uploadCloundinary');
+
 
 // [GET] /chat
 module.exports.index = async (req, res) => {
@@ -9,17 +12,29 @@ module.exports.index = async (req, res) => {
 
     // Bắt sự kiện connect của socket.io
     _io.once('connection', (socket) => {
-        socket.on("CLIENT_SEND_MESSAGE", async (content) => {
+        socket.on("CLIENT_SEND_MESSAGE", async (data) => {
+
+            // Save the images to the cloundinary
+            let images = [];
+            for (const imageBuffer of data.images) {
+                const link = await uploadCloundinary(imageBuffer);
+                images.push(link);
+            }
+
+            // Save the data to the database
             const chat = new Chat({
                 user_id: userId,
-                content: content
+                content: data.content,
+                images: images
             });
             await chat.save();
-            // RealTime Return content to client
+
+            // RealTime Return data to client
             _io.emit('SERVER_RETURN_MESSAGE', {
                 userId: userId,
                 fullName: fullName,
-                content: content
+                content: data.content,
+                images: images
             });
         });
 
