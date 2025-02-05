@@ -45,9 +45,27 @@ module.exports.friends = async (req, res) => {
 
 // [GET] /users/request
 module.exports.request = async (req, res) => {
+     // SocketIO
+     usersSocket(res);
+     // End SocketIO
+
+    const myUserId = res.locals.user.id;
+    // Lấy List user đã gửi yêu cầu
+    const myUser = await User.findOne({
+        _id: myUserId
+    })
+    const requestFriends = myUser.requestFriends;
+    
+    // Lấy all User trong requestFriends 
+    const users = await User.find({
+        _id: {$in : requestFriends},
+        status: "active",
+        deleted: false
+    }).select("id avatar fullName");
 
     res.render("client/pages/users/request.pug", {
         pageTitle: "Lời mời đã gửi",
+        users: users
     })
 }  
 
