@@ -572,3 +572,51 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
   }
 }
   /* End Typing */
+
+  /* Box User */
+.box-user {
+  display: flex;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.box-user .inner-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e7e6e6;
+  margin-right: 10px;
+}
+
+.box-user .inner-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.box-user .inner-info{
+  flex: 1;
+  max-width: calc(100% - 90px); /* Giới hạn tối đa trừ avatar */
+}
+
+.box-user .inner-info .inner-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.box-user [btn-cancel-friend]{
+  display: none;
+}
+
+.box-user.add [btn-add-friend]{
+  display: none;
+}
+
+.box-user.add [btn-cancel-friend]{
+  display: inline-block;
+}
+  /* Box User */
