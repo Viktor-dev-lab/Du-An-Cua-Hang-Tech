@@ -36,7 +36,7 @@ module.exports = async(res) => {
             }
         });
 
-         // Người dùng hủy yêu cầu kết bạn
+        // Người dùng hủy yêu cầu kết bạn
         socket.on("CLIENT_CANCEL_FRIEND", async (ID_USER_B) => {
             const ID_USER_A = res.locals.user.id;
 
@@ -65,6 +65,90 @@ module.exports = async(res) => {
                 await User.updateOne(
                     {_id: ID_USER_A},
                     {$pull: {requestFriends: ID_USER_B}}
+                );
+            }
+        });
+
+        // Người dùng từ chối kết bạn
+        socket.on("CLIENT_REFUSE_FRIEND", async (ID_USER_B) => {
+            const ID_USER_A = res.locals.user.id;
+
+            // Xóa ID của B vào acceptFriends của A
+            // Kiểm tra tồn tại trc khi thêm
+            const existUserAinB = await User.findOne({
+                _id: ID_USER_A,
+                acceptFriends: ID_USER_B
+            });
+
+            if (existUserAinB){
+                await User.updateOne(
+                    {_id: ID_USER_A},
+                    {$pull: {acceptFriends: ID_USER_B}}
+                );
+            }
+
+            // Xóa ID của A vào requestFriends của B
+            // Kiểm tra tồn tại trc khi thêm
+            const existUserBinA = await User.findOne({
+                _id: ID_USER_B,
+                requestFriends: ID_USER_A
+            });
+
+            if (existUserBinA){
+                await User.updateOne(
+                    {_id: ID_USER_B},
+                    {$pull: {requestFriends: ID_USER_A}}
+                );
+            }
+        });
+
+        // Người dùng chấp nhận kết bạn
+        socket.on("CLIENT_ACCEPT_FRIEND", async (ID_USER_B) => {
+            const ID_USER_A = res.locals.user.id;
+            
+            // THêm {user_id, room_chat_id} của A vào friendList của B
+            // Xóa ID của A trong acceptFriends của B
+            // Kiểm tra tồn tại trc khi thêm
+            const existUserAinB = await User.findOne({
+                _id: ID_USER_A,
+                acceptFriends: ID_USER_B
+            });
+
+            if (existUserAinB){
+                await User.updateOne(
+                    {_id: ID_USER_A},
+                    {
+                        $push: {
+                            friendList: {
+                                user_id: ID_USER_B,
+                                room_chat_id: ""
+                            }
+                        }
+                    },
+                    {$pull: {acceptFriends: ID_USER_B}}
+                );
+            }
+
+            // THêm {user_id, room_chat_id} của B vào friendList của A
+            // Xóa ID của B trong requestFriends của A
+            // Kiểm tra tồn tại trc khi thêm
+            const existUserBinA = await User.findOne({
+                _id: ID_USER_B,
+                requestFriends: ID_USER_A
+            });
+
+            if (existUserBinA){
+                await User.updateOne(
+                    {_id: ID_USER_B},
+                    {
+                        $push: {
+                            friendList: {
+                                user_id: ID_USER_A,
+                                room_chat_id: ""
+                            }
+                        }
+                    },
+                    {$pull: {requestFriends: ID_USER_A}}
                 );
             }
         });
