@@ -3,6 +3,7 @@ const User = require("../../models/user.model.js");
 
 module.exports = async(res) => {
     _io.once('connection', (socket) => {
+
         // Người dùng gửi yêu cầu kết bạn
         socket.on("CLIENT_ADD_FRIEND", async (ID_USER_B) => {
             const ID_USER_A = res.locals.user.id;
@@ -34,6 +35,25 @@ module.exports = async(res) => {
                     {$push: {requestFriends: ID_USER_B}}
                 );
             }
+
+            // SERVER trả về số lượng acceptFriends (Biểu tượng icon) của lời mời kết bạn
+            // Lấy độ dài acceptFriends của B trả về client đến B
+            const infoUserB = await User.findOne({_id: ID_USER_B});
+            const lengthAcceptFriends = infoUserB.acceptFriends.length;
+            socket.broadcast.emit("SEVER_RETURN_LENGTH_ACCEPTFRIEND", {
+                userId: ID_USER_B,
+                lengthAcceptFriends: lengthAcceptFriends
+            });
+
+            // SERVER trả về thông tin (khung thông tin user kết bạn) 
+            // Lấy thông tin của A trả về cho B
+            const infoUserA = await User.findOne({_id: ID_USER_A}).select("id avatar fullName");
+            socket.broadcast.emit("SEVER_RETURN_INFO_ACCEPTFRIEND", {
+                userId: ID_USER_B,
+                infoUserA: infoUserA
+            });
+
+
         });
 
         // Người dùng hủy yêu cầu kết bạn
@@ -67,6 +87,14 @@ module.exports = async(res) => {
                     {$pull: {requestFriends: ID_USER_B}}
                 );
             }
+
+            // Lấy độ dài acceptFriends của B trả về client đến B
+            const infoUserB = await User.findOne({_id: ID_USER_B});
+            const lengthAcceptFriends = infoUserB.acceptFriends.length;
+            socket.broadcast.emit("SEVER_RETURN_LENGTH_ACCEPTFRIEND", {
+                userId: ID_USER_B,
+                lengthAcceptFriends: lengthAcceptFriends
+            })
         });
 
         // Người dùng từ chối kết bạn
