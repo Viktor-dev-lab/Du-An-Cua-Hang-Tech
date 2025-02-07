@@ -26,7 +26,6 @@ if (listBtnCancelFriend.length > 0) {
 }
 // Hết chức năng hủy yêu cầu kết bạn
 
-
 // Chức năng từ chối kết bạn
 const listBtnRefuseFriend = document.querySelectorAll("[btn-refuse-friend]");
 if (listBtnRefuseFriend.length > 0) {
@@ -66,15 +65,16 @@ socket.on("SEVER_RETURN_LENGTH_ACCEPTFRIEND", (data) => {
 });
 // END SEVER_RETURN_LENGTH_ACCEPTFRIEND
 
-
 // SEVER_RETURN_INFO_ACCEPTFRIEND
 socket.on("SEVER_RETURN_INFO_ACCEPTFRIEND", (data) => {
     const dataUserAccept = document.querySelector("[data-users-accept]");
     const userId = dataUserAccept.getAttribute("data-users-accept");
 
+    // Kiểm tra người dùng hiện tại có đúng là ông B mà server gửi info qua không
     if (userId == data.userId) {
         const newBoxUser = document.createElement("div");
         newBoxUser.classList.add("col-6");
+        newBoxUser.setAttribute("user-id", data.infoUserA._id);
 
         newBoxUser.innerHTML = `
             <div class="box-user">
@@ -115,7 +115,7 @@ socket.on("SEVER_RETURN_INFO_ACCEPTFRIEND", (data) => {
             </div>
         `
         dataUserAccept.appendChild(newBoxUser);
-        
+
         // Chức năng từ chối kết bạn
         const BtnRefuseFriend = dataUserAccept.querySelectorAll("[btn-refuse-friend]");
         BtnRefuseFriend.forEach(button => {
@@ -127,6 +127,35 @@ socket.on("SEVER_RETURN_INFO_ACCEPTFRIEND", (data) => {
             });
         });
         // Hết chức năng từ chối kết bạn
+
+
+        // Chức năng chấp nhận kết bạn
+        const BtnAcceptFriend = dataUserAccept.querySelectorAll("[btn-accept-friend]");
+        BtnAcceptFriend.forEach(button => {
+            button.addEventListener("click", () => {
+                button.closest(".box-user").classList.add("accepted");
+                const userId = button.getAttribute("btn-accept-friend");
+
+                socket.emit("CLIENT_ACCEPT_FRIEND", userId);
+            });
+        });
+    // Hết chức năng chấp nhận kết bạn
     }
 });
 // END SEVER_RETURN_INFO_ACCEPTFRIEND
+
+// SEVER_RETURN__CANCEL_ACCEPTFRIEND
+socket.on("SEVER_RETURN__CANCEL_ACCEPTFRIEND", (data) => {
+    const dataUserAccept = document.querySelector("[data-users-accept]");
+    const userId = dataUserAccept.getAttribute("data-users-accept");
+
+    // Kiểm tra người dùng hiện tại có đúng là ông B mà server gửi info qua không
+    if (userId == data.ID_USER_B) {
+       // Xóa A khỏi danh sách lời mời kết bạn của B
+       const boxUserRemove = dataUserAccept.querySelector(`[user-id="${data.ID_USER_A}"]`);
+       if (boxUserRemove){
+            dataUserAccept.removeChild(boxUserRemove);
+       }
+    }
+});
+// END SEVER_RETURN__CANCEL_ACCEPTFRIEND

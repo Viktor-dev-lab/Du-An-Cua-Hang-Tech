@@ -95,6 +95,14 @@ module.exports = async(res) => {
                 userId: ID_USER_B,
                 lengthAcceptFriends: lengthAcceptFriends
             })
+
+            // SERVER trả về thông tin để từ chối KB (khung thông tin user kết bạn) 
+            // Lấy thông tin của B trả về cho B
+            socket.broadcast.emit("SEVER_RETURN__CANCEL_ACCEPTFRIEND", {
+                ID_USER_B: ID_USER_B,
+                ID_USER_A: ID_USER_A
+            })
+
         });
 
         // Người dùng từ chối kết bạn
@@ -151,9 +159,9 @@ module.exports = async(res) => {
                                 user_id: ID_USER_B,
                                 room_chat_id: ""
                             }
-                        }
+                        },
+                        $pull: {acceptFriends: ID_USER_B}
                     },
-                    {$pull: {acceptFriends: ID_USER_B}}
                 );
             }
 
@@ -174,9 +182,9 @@ module.exports = async(res) => {
                                 user_id: ID_USER_A,
                                 room_chat_id: ""
                             }
-                        }
+                        },
+                        $pull: {requestFriends: ID_USER_A}
                     },
-                    {$pull: {requestFriends: ID_USER_A}}
                 );
             }
         });
