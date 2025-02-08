@@ -163,6 +163,11 @@ module.exports.loginPost = async (req, res) => {
         {_id: req.cookies.cartId},
         {user_id: user.id}
     );
+    // Bật trạng thái online
+    await User.updateOne(
+        {_id: user.id},
+        {statusOnline: "Online"}
+    );
 
     res.redirect("/");
 }
@@ -170,6 +175,11 @@ module.exports.loginPost = async (req, res) => {
 // [GET] /user/logout
 module.exports.logout = async (req, res) => {
     res.clearCookie("tokenUser");
+    // Bật trạng thái Offline
+    await User.updateOne(
+        {_id: res.locals.user.id},
+        {statusOnline: "Offline"}
+    );
     res.redirect("/");
 }
 

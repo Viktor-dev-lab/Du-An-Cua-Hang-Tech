@@ -636,10 +636,6 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
   display: none;
 }
 
-.box-user.refuse [btn-friend]{
-  display: none;
-}
-
 .box-user.refuse [btn-deleted-friend]{
   display: inline-block;
 }

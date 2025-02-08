@@ -50,7 +50,7 @@ module.exports.friends = async (req, res) => {
     
     // Truy vấn tất cả bạn bè chỉ trong 1 lần gọi DB
     const friendList = await User.find({ _id: { $in: ID_ListUser } })
-        .select("_id fullName avatar");
+        .select("_id fullName avatar statusOnline");
     
     
     res.render("client/pages/users/friends.pug", {

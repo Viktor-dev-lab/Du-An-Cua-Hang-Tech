@@ -3,38 +3,46 @@ include ../../mixins/box-head.pug
 include ../../../admin/mixins/alert.pug
 
 block main
-    .container.my-3 
+    .container.my-4 
         include ../../partials/list-btn-users.pug
 
-        .row.mb-3
+        .row.mb-4
             .col-12
                 +box-head("Danh sách bạn bè")
 
         .row(data-users=user.id)
             each user in friendList
-                .col-4(user-id=user.id)
-                    div(class="box-user")
-                        div(class="inner-avatar")
-                            img(
-                                src=(user.avatar ? user.avatar : "/images/avatar.jpg")
-                                alt=user.fullName
-                            )
-                        div(class="inner-info")
-                            div(class="inner-name") #{user.fullName}
-                            div(class="inner-buttons")
-                                button(
-                                    class="btn btn-sm btn-success me-1"
-                                    btn-friend
-                                ) Bạn Bè
-                                button(
-                                    class="btn btn-sm btn-secondary me-1"
-                                    btn-refuse-is-friend=user.id
-                                ) Hủy     
-                                button(
-                                    class="btn btn-sm btn-secondary me-1"
-                                    btn-deleted-friend 
-                                    disabled
-                                ) Đã xóa 
+                .col-md-4.col-sm-6.mb-4(user-id=user.id)
+                    .box-user.card.shadow-lg.border-0.position-relative.p-3
+                        .d-flex.align-items-center
+                            .inner-avatar.me-3.d-flex.justify-content-center.align-items-center
+                                img(
+                                    src=(user.avatar ? user.avatar : "/images/avatar.jpg")
+                                    alt=user.fullName
+                                    class="rounded-circle border"
+                                    style="width: 65px; height: 65px; object-fit: cover; border-radius: 50%;"
+                                )
+                            .inner-info.flex-grow-1
+                                .inner-name.text-primary.fw-bold #{user.fullName}
+                                .inner-buttons.mt-2
+                                    a(
+                                        href="a"
+                                        class="btn btn-sm btn-primary me-2 text-decoration-none"
+                                    ) 📨 Nhắn tin
+                                    button(
+                                        class="btn btn-sm btn-outline-danger me-2"
+                                        btn-refuse-is-friend=user.id
+                                    ) ❌ Hủy
+                                    button(
+                                        class="btn btn-sm btn-secondary d-none"
+                                        btn-deleted-friend
+                                        disabled
+                                    ) 🗑 Đã xóa
+                        .inner-status.position-absolute.top-0.end-0.mt-2.me-3
+                            if user.statusOnline == "Online"
+                                span.text-success <i class="fa-solid fa-circle"></i> Online
+                            else
+                                span.text-muted <i class="fa-solid fa-circle"></i> Offline
 
-    block script
-        script(type="module" src = '/js/users.js')                            
+block script
+    script(type="module" src='/js/users.js')
