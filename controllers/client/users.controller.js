@@ -17,6 +17,7 @@ module.exports.notFriends = async (req, res) => {
     });
     const requestFriends = myUser.requestFriends;
     const acceptFriends = myUser.acceptFriends;
+    const friendList = myUser.friendList ? myUser.friendList.map(f => f.user_id) : [];
 
     const users = await User.find({
         $and: [
@@ -29,17 +30,32 @@ module.exports.notFriends = async (req, res) => {
         deleted: false
     }).select("avatar fullName");
 
+
     res.render("client/pages/users/index.pug", {
         pageTitle: "Danh sách người dùng",
-        users: users
+        users: users,
+        friendList, friendList
     })
 }  
 
 // [GET] /users/friends
 module.exports.friends = async (req, res) => {
+    // SocketIO
+    usersSocket(res);
+    // End SocketIO
 
+    const myUserId = res.locals.user.id;
+    const myUser = await User.findOne({ _id: myUserId });
+    const ID_ListUser = myUser.friendList ? myUser.friendList.map(f => f.user_id) : [];
+    
+    // Truy vấn tất cả bạn bè chỉ trong 1 lần gọi DB
+    const friendList = await User.find({ _id: { $in: ID_ListUser } })
+        .select("_id fullName avatar");
+    
+    
     res.render("client/pages/users/friends.pug", {
         pageTitle: "Danh sách bạn bè",
+        friendList, friendList
     })
 }  
 
@@ -71,10 +87,10 @@ module.exports.request = async (req, res) => {
 
 // [GET] /users/accept
 module.exports.accept = async (req, res) => {
-     // SocketIO
-     usersSocket(res);
-     // End SocketIO
-     
+    // SocketIO
+    usersSocket(res);
+    // End SocketIO
+
     const myUserId = res.locals.user.id;
     // Lấy List user đã gửi yêu cầu
     const myUser = await User.findOne({

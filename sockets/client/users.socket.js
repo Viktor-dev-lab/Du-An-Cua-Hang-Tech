@@ -56,7 +56,7 @@ module.exports = async(res) => {
 
         });
 
-        // Người dùng hủy yêu cầu kết bạn
+        // Người dùng hủy yêu cầu kết bạn khi A-> gửi kết bạn cho B
         socket.on("CLIENT_CANCEL_FRIEND", async (ID_USER_B) => {
             const ID_USER_A = res.locals.user.id;
 
@@ -105,7 +105,7 @@ module.exports = async(res) => {
 
         });
 
-        // Người dùng từ chối kết bạn
+        // Người dùng từ chối kết bạn khi khi A-> gửi kết bạn cho B
         socket.on("CLIENT_REFUSE_FRIEND", async (ID_USER_B) => {
             const ID_USER_A = res.locals.user.id;
 
@@ -187,6 +187,37 @@ module.exports = async(res) => {
                     },
                 );
             }
+
+            // Khi người dùng B chấp nhận thì phải xóa info A 
+            // Trong trang danh sách người dùng
+            socket.broadcast.emit("SEVER_DELETED_NOTFRIEND", {
+                ID_USER_B: ID_USER_B,
+                ID_USER_A: ID_USER_A,
+            })
+        });
+
+        // Người dùng hủy yêu cầu kết bạn khi là bạn bè giữa A-B
+        socket.on("CLIENT_REFUSE_IS_FRIEND", async (ID_USER_B) => {
+            const ID_USER_A = res.locals.user.id;
+
+            // Xóa ID của A trong friendList của B
+            await User.updateOne(
+                { _id: ID_USER_B }, // Tìm user B
+                { $pull: { friendList: { user_id: ID_USER_A } } } // Xóa ID_A khỏi friendList
+            );
+
+            // Xóa ID của B vào friendList của A
+            await User.updateOne(
+                { _id: ID_USER_A }, // Tìm user B
+                { $pull: { friendList: { user_id: ID_USER_B } } } // Xóa ID_A khỏi friendList
+            );
+
+            // SERVER trả về thông tin để hủy KB (khung thông tin user kết bạn) 
+            // Lấy thông tin của B trả về cho B
+            socket.broadcast.emit("SEVER_RETURN__REFUSE_IS_FRIEND", {
+                ID_USER_B: ID_USER_B,
+                ID_USER_A: ID_USER_A
+            })
         });
     });
 }

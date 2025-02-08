@@ -22,14 +22,20 @@ block main
                         div(class="inner-info")
                             div(class="inner-name") #{user.fullName}
                             div(class="inner-buttons")
-                                button(
-                                    class="btn btn-sm btn-primary me-1"
-                                    btn-add-friend=user.id
-                                ) Kết bạn 
-                                button(
-                                    class="btn btn-sm btn-secondary me-1"
-                                    btn-cancel-friend=user.id
-                                ) Hủy                             
+                                if friendList.includes(user.id)
+                                    button(
+                                        class="btn btn-sm btn-success me-1"
+                                    ) Bạn bè
+                                else
+                                    button(
+                                        class="btn btn-sm btn-primary me-1"
+                                        btn-add-friend=user.id
+                                    ) Kết bạn 
+                                    button(
+                                        class="btn btn-sm btn-secondary me-1"
+                                        btn-cancel-friend=user.id
+                                    ) Hủy    
+                      
 
     block script
         script(type="module" src = '/js/users.js')

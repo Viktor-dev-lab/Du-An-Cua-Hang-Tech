@@ -54,6 +54,21 @@ if (listBtnAcceptFriend.length > 0) {
 }
 // Hết chức năng chấp nhận kết bạn
 
+// Chức năng từ chối kết bạn khi đã là bạn bè
+const listBtnFriend = document.querySelectorAll("[btn-refuse-is-friend]");
+console.log(listBtnFriend)
+if (listBtnFriend.length > 0) {
+    listBtnFriend.forEach(button => {
+        button.addEventListener("click", () => {
+            button.closest(".box-user").classList.add("refuse");
+            const userId = button.getAttribute("btn-refuse-is-friend");
+
+            socket.emit("CLIENT_REFUSE_IS_FRIEND", userId);
+        });
+    });
+}
+// Hết chức năng từ chối kết bạn khi đã là bạn bè
+
 // SEVER_RETURN_LENGTH_ACCEPTFRIEND
 socket.on("SEVER_RETURN_LENGTH_ACCEPTFRIEND", (data) => {
     const badgeUserAccept = document.querySelector("[badge-users-accept]");
@@ -180,3 +195,50 @@ socket.on("SEVER_RETURN__CANCEL_ACCEPTFRIEND", (data) => {
     }
 });
 // END SEVER_RETURN__CANCEL_ACCEPTFRIEND
+
+// SEVER_DELETED_NOTFRIEND
+socket.on("SEVER_DELETED_NOTFRIEND", (data) => {
+    const dataUserAccept = document.querySelector("[data-users-not-friend]");
+    const userId = dataUserAccept.getAttribute("data-users-not-friend");
+
+    // Kiểm tra người dùng hiện tại có đúng là ông B mà server gửi info qua không
+    if (userId == data.ID_USER_B) {
+        // Xóa A khỏi danh sách lời mời kết bạn của B
+        const boxUserRemove = dataUserAccept.querySelector(`[user-id="${data.ID_USER_A}"]`);
+        if (boxUserRemove) {
+            // Tìm phần tử chứa các nút
+            let buttonContainer = boxUserRemove.querySelector('.inner-buttons');
+
+            // Xóa nút có thuộc tính 'btn-cancel-friend'
+            let btnCancel = buttonContainer.querySelector('[btn-cancel-friend]');
+            if (btnCancel) btnCancel.remove();
+
+            // Tạo nút mới
+            let newButton = document.createElement('button');
+            newButton.className = 'btn btn-sm btn-success';
+            newButton.textContent = 'Bạn bè';
+
+            // Thêm nút mới vào container
+            buttonContainer.appendChild(newButton);
+            //dataUserAccept.removeChild(boxUserRemove);
+        }
+    }
+});
+// END SEVER_DELETED_NOTFRIEND
+
+
+// SEVER_RETURN__REFUSE_IS_FRIEND
+socket.on("SEVER_RETURN__REFUSE_IS_FRIEND", (data) => {
+    const dataUserAccept = document.querySelector("[data-users]");
+    const userId = dataUserAccept.getAttribute("data-users");
+
+    // Kiểm tra người dùng hiện tại có đúng là ông B mà server gửi info qua không
+    if (userId == data.ID_USER_B) {
+        // Xóa A khỏi danh sách lời mời kết bạn của B
+        const boxUserRemove = dataUserAccept.querySelector(`[user-id="${data.ID_USER_A}"]`);
+        if (boxUserRemove) {
+            dataUserAccept.removeChild(boxUserRemove);
+        }
+    }
+});
+// END SEVER_RETURN__REFUSE_IS_FRIEND

@@ -9,3 +9,32 @@ block main
         .row.mb-3
             .col-12
                 +box-head("Danh sách bạn bè")
+
+        .row(data-users=user.id)
+            each user in friendList
+                .col-4(user-id=user.id)
+                    div(class="box-user")
+                        div(class="inner-avatar")
+                            img(
+                                src=(user.avatar ? user.avatar : "/images/avatar.jpg")
+                                alt=user.fullName
+                            )
+                        div(class="inner-info")
+                            div(class="inner-name") #{user.fullName}
+                            div(class="inner-buttons")
+                                button(
+                                    class="btn btn-sm btn-success me-1"
+                                    btn-friend
+                                ) Bạn Bè
+                                button(
+                                    class="btn btn-sm btn-secondary me-1"
+                                    btn-refuse-is-friend=user.id
+                                ) Hủy     
+                                button(
+                                    class="btn btn-sm btn-secondary me-1"
+                                    btn-deleted-friend 
+                                    disabled
+                                ) Đã xóa 
+
+    block script
+        script(type="module" src = '/js/users.js')                            
