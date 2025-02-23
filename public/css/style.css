@@ -655,5 +655,17 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
 .box-user.accepted [btn-accepted-friend]{
   display: inline-block;
 }
-
   /* Box User */
+
+
+/* Tag Online */
+.box-user .inner-status{
+  color: #90d800;
+  opacity: 0;
+}
+
+.box-user .inner-status[status="Online"] {
+  opacity: 1;
+}
+/* Tag Online */
+

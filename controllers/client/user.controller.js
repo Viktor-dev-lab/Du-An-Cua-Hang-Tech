@@ -99,14 +99,20 @@ module.exports.registerOtpPost = async (req, res) => {
     const otp = req.body.otp;
 
     // Kiểm tra email và OTP
-    const result = await RegisterOtp.findOne({ email: email, otp: otp });
+    const result = await RegisterOtp.findOne({
+        email: email,
+        otp: otp
+    });
     if (!result) {
         req.flash("error", "OTP không hợp lệ hoặc đã hết hạn");
         return res.redirect("back");
     }
 
     // Xóa OTP trước
-    await RegisterOtp.deleteOne({ email: email, otp: otp });
+    await RegisterOtp.deleteOne({
+        email: email,
+        otp: otp
+    });
 
     // Tạo user mới từ result
     const user = new User({
@@ -159,15 +165,24 @@ module.exports.loginPost = async (req, res) => {
 
     res.cookie("tokenUser", user.tokenUser);
     // Lưu user_id vào collection carts
-    await Cart.updateOne(
-        {_id: req.cookies.cartId},
-        {user_id: user.id}
-    );
+    await Cart.updateOne({
+        _id: req.cookies.cartId
+    }, {
+        user_id: user.id
+    });
     // Bật trạng thái online
-    await User.updateOne(
-        {_id: user.id},
-        {statusOnline: "Online"}
-    );
+    await User.updateOne({
+        _id: user.id
+    }, {
+        statusOnline: "Online"
+    });
+
+    // Bật Socket thông báo online
+    _io.once('connection', (socket) => {
+        socket.broadcast.emit("SERVER_UPDATE_USER_ONLINE", {
+            userID_A: user.id,
+        });
+    });
 
     res.redirect("/");
 }
@@ -176,10 +191,19 @@ module.exports.loginPost = async (req, res) => {
 module.exports.logout = async (req, res) => {
     res.clearCookie("tokenUser");
     // Bật trạng thái Offline
-    await User.updateOne(
-        {_id: res.locals.user.id},
-        {statusOnline: "Offline"}
-    );
+    await User.updateOne({
+        _id: res.locals.user.id
+    }, {
+        statusOnline: "Offline"
+    });
+
+
+    // Bật Socket thông báo offline
+    _io.once('connection', (socket) => {
+        socket.broadcast.emit("SERVER_UPDATE_USER_OFFLINE", {
+            userID_A: res.locals.user.id,
+        });
+    });
     res.redirect("/");
 }
 

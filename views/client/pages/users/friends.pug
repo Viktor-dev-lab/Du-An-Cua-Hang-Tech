@@ -38,11 +38,14 @@ block main
                                         btn-deleted-friend
                                         disabled
                                     ) 🗑 Đã xóa
-                        .inner-status.position-absolute.top-0.end-0.mt-2.me-3
-                            if user.statusOnline == "Online"
-                                span.text-success <i class="fa-solid fa-circle"></i> Online
-                            else
-                                span.text-muted <i class="fa-solid fa-circle"></i> Offline
 
-block script
-    script(type="module" src='/js/users.js')
+                        div(
+                            class="inner-status position-absolute top-0 end-0 mt-2 me-3"
+                            status=user.statusOnline
+                        )
+                            span.text-success 
+                                i.fa-solid.fa-circle
+
+
+    block script
+        script(type="module" src='/js/users.js')

@@ -56,7 +56,6 @@ if (listBtnAcceptFriend.length > 0) {
 
 // Chức năng từ chối kết bạn khi đã là bạn bè
 const listBtnFriend = document.querySelectorAll("[btn-refuse-is-friend]");
-console.log(listBtnFriend)
 if (listBtnFriend.length > 0) {
     listBtnFriend.forEach(button => {
         button.addEventListener("click", () => {
@@ -242,3 +241,30 @@ socket.on("SEVER_RETURN__REFUSE_IS_FRIEND", (data) => {
     }
 });
 // END SEVER_RETURN__REFUSE_IS_FRIEND
+
+
+function updateUserStatus(userID_A, status) {
+    const dataUserFriend = document.querySelector("[data-users]");
+    if (!dataUserFriend) return;
+
+    const boxUser = dataUserFriend.querySelector(`[user-id="${userID_A}"]`);
+    if (!boxUser) return;
+
+    const statusElement = boxUser.querySelector("[status]");
+    if (!statusElement) return;
+
+    statusElement.setAttribute("status", status);
+}
+
+
+// SERVER_UPDATE_USER_ONLINE
+socket.on("SERVER_UPDATE_USER_ONLINE", ({ userID_A }) => {
+    updateUserStatus(userID_A, "Online");
+});
+// END SERVER_UPDATE_USER_ONLINE
+
+// SERVER_UPDATE_USER_OFFLINE
+socket.on("SERVER_UPDATE_USER_OFFLINE", ({ userID_A }) => {
+    updateUserStatus(userID_A, "Offline");
+});
+// END SERVER_UPDATE_USER_OFFLINE
