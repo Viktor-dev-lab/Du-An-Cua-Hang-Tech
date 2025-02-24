@@ -73,21 +73,24 @@ module.exports.detail = async (req, res) => {
     }
 }
 
+
 module.exports.category = async (req, res) => {
     const category = await ProductCategory.findOne({
         slug: req.params.slugCategory,
         deleted: false
     });
 
-    if (category){
-        const listSubCategory = await productCategpryHelper.getSubCategory(category.id);
-        const listSubCategoryID = listSubCategory.map(item => item.id);
-    }
+    // Khai báo biến bên ngoài với giá trị mặc định là mảng rỗng
+    let listSubCategoryID = [];
 
+    if (category) {
+        const listSubCategory = await productCategpryHelper.getSubCategory(category.id);
+        listSubCategoryID = listSubCategory.map(item => item.id);
+    }
     const products = await Product.find({
-        product_category_id: {$in: [category.id, ...listSubCategoryID]},
+        product_category_id: { $in: [category.id, ...listSubCategoryID] },
         deleted: false
-    }).sort({position: "desc"});
+    }).sort({ position: "desc" });
 
     const newProducts = productHelper.priceNewProducts(products);
     
@@ -95,5 +98,4 @@ module.exports.category = async (req, res) => {
         pageTitle: category.title,
         products: newProducts
     });
-
 }

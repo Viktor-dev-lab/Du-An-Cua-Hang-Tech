@@ -244,7 +244,7 @@ socket.on("SEVER_RETURN__REFUSE_IS_FRIEND", (data) => {
 
 
 function updateUserStatus(userID_A, status) {
-    const dataUserFriend = document.querySelector("[data-users]");
+    const dataUserFriend = document.querySelector("[data-users-friends]");
     if (!dataUserFriend) return;
 
     const boxUser = dataUserFriend.querySelector(`[user-id="${userID_A}"]`);

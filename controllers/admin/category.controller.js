@@ -118,7 +118,7 @@ module.exports.delete = async (req, res) => {
 // [PATCH] admin/products-category/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
     const newStatus = req.params.status;
-    console.log(newStatus);
+
     const Id = req.params.id;
     const update = {
         account_id: res.locals.user.id,

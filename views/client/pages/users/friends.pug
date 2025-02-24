@@ -10,7 +10,7 @@ block main
             .col-12
                 +box-head("Danh sách bạn bè")
 
-        .row(data-users=user.id)
+        .row(data-users-friends=user.id)
             each user in friendList
                 .col-md-4.col-sm-6.mb-4(user-id=user.id)
                     .box-user.card.shadow-lg.border-0.position-relative.p-3

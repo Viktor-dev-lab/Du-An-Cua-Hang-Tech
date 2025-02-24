@@ -39,6 +39,7 @@ module.exports.create = async (req, res) => {
     })
 }
 
+// [POST] admin/accounts/create
 module.exports.createPost = async (req, res) => {
     const EmailExist = await Account.findOne({
         email: req.body.email,
