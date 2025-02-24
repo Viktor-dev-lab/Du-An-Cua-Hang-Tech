@@ -25,7 +25,7 @@ header.header
                             type="submit"
                             class="btn btn-primary"
                         ) Tìm
-        
+
             .col-4
                 .inner-menu
                     ul
@@ -40,8 +40,11 @@ header.header
                         if(user)
                             li
                                 a(href="/user/logout") Đăng xuất
+                            //- li
+                            //-     a(href="/chat") Chat
+
                             li
-                                a(href="/chat") Chat
+                                a(href="/users/friends") Chat
                             li
                                 a(href="/user/info") #{user.fullName}
                         else

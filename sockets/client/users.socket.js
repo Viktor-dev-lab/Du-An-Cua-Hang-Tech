@@ -1,5 +1,6 @@
 // Models
 const User = require("../../models/user.model.js");
+const RoomChat = require("../../models/room-chat.model.js");
 
 module.exports = async(res) => {
     _io.once('connection', (socket) => {
@@ -142,13 +143,43 @@ module.exports = async(res) => {
         socket.on("CLIENT_ACCEPT_FRIEND", async (ID_USER_B) => {
             const ID_USER_A = res.locals.user.id;
             
-            // THêm {user_id, room_chat_id} của A vào friendList của B
-            // Xóa ID của A trong acceptFriends của B
-            // Kiểm tra tồn tại trc khi thêm
+
+            // Lấy 2 user đã kết bạn và kiểm tra
             const existUserAinB = await User.findOne({
                 _id: ID_USER_A,
                 acceptFriends: ID_USER_B
             });
+
+            const existUserBinA = await User.findOne({
+                _id: ID_USER_B,
+                requestFriends: ID_USER_A
+            });
+
+            let roomChat;
+            // Tạo roomchat cho 2 người
+            if (existUserAinB && existUserBinA){
+                roomChat = new RoomChat({
+                    typeRoom: 'friend',
+                    theme: 'blue',
+                    color: 'white',
+                    status: 'active',
+                    users : [
+                      {
+                        user_id: ID_USER_A,
+                        role: 'superAdmin',
+                      },
+                      {
+                        user_id: ID_USER_B,
+                        role: 'superAdmin',
+                      }
+                    ],
+                });
+                await roomChat.save();
+            }
+
+            // THêm {user_id, room_chat_id} của A vào friendList của B
+            // Xóa ID của A trong acceptFriends của B
+            // Kiểm tra tồn tại trc khi thêm
 
             if (existUserAinB){
                 await User.updateOne(
@@ -157,7 +188,7 @@ module.exports = async(res) => {
                         $push: {
                             friendList: {
                                 user_id: ID_USER_B,
-                                room_chat_id: ""
+                                room_chat_id: roomChat.id
                             }
                         },
                         $pull: {acceptFriends: ID_USER_B}
@@ -168,10 +199,6 @@ module.exports = async(res) => {
             // THêm {user_id, room_chat_id} của B vào friendList của A
             // Xóa ID của B trong requestFriends của A
             // Kiểm tra tồn tại trc khi thêm
-            const existUserBinA = await User.findOne({
-                _id: ID_USER_B,
-                requestFriends: ID_USER_A
-            });
 
             if (existUserBinA){
                 await User.updateOne(
@@ -180,7 +207,7 @@ module.exports = async(res) => {
                         $push: {
                             friendList: {
                                 user_id: ID_USER_A,
-                                room_chat_id: ""
+                                room_chat_id: roomChat.id
                             }
                         },
                         $pull: {requestFriends: ID_USER_A}
