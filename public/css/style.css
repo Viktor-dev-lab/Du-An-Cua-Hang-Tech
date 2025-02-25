@@ -46,7 +46,7 @@ body {
     color: #fff;
     text-align: center;
     padding: 10px;
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
 }
@@ -357,7 +357,7 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
 .chat-container .chat {
   display: flex;
   flex-direction: column;
-  height: 700px;
+  height: 500px;
   overflow: hidden;
 }
 
@@ -669,3 +669,48 @@ text-decoration: underline; /* Thêm hiệu ứng gạch chân khi di chuột */
 }
 /* Tag Online */
 
+
+/* Trang Phòng Chat */
+
+/* Phần list chat */
+.friends-list {
+  max-height: 545px; /* Chiều cao tối đa */
+  overflow-y: auto; /* Bật thanh cuộn */
+  border-right: 1px solid #ddd; /* Viền phải */
+}
+
+.friend-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 8px; /* Bo góc */
+}
+
+.friend-item:hover {
+  background-color: #f5f5f5; /* Hiệu ứng hover */
+}
+/* Phần list chat */
+
+/* Phần siddebar chứ năng phụ */
+.chat-info {
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu-item {
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+.nested-menu {
+  display: none;
+}
+
+.menu-item:hover .nested-menu {
+  display: block;
+}
+/* Phần siddebar chứ năng phụ */
+
+/* Trang Phòng Chat */

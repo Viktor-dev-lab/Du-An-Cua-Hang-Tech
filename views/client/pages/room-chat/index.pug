@@ -1,0 +1,121 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-grid.pug
+include ../../../admin/mixins/alert.pug
+
+block main
+    .container.my-4
+        .row.mt-4.h-100
+            // Sidebar danh sách bạn bè (similar to Instagram/Facebook)
+            .col-3
+                .friends-list.p-3.bg-light.shadow-sm.h-100
+                    each friend in friends
+                        .friend-item.d-flex.align-items-center.p-2.border-bottom.position-relative
+                            img.rounded-circle(src=friend.avatar, width="50", height="50")
+                            .flex-grow-1.ms-3
+                                strong= friend.name
+                                .small.text-muted= friend.fromMessage + ": " + friend.lastMessage
+                            // Dropdown for options (similar to Instagram/Facebook chat)
+                            .dropdown
+                                i.fas.fa-ellipsis-h.text-muted.ms-2(data-bs-toggle="dropdown")(aria-expanded="false")
+                                .dropdown-menu.dropdown-menu-light
+                                    li.a.dropdown-item(href="#") Lưu trữ tin nhắn
+                                    li.a.dropdown-item(href="#") Xóa tin nhắn
+                                    li.a.dropdown-item(href="#") Xem trang cá nhân
+                                    li.a.dropdown-item(href="#") Tắt thông báo
+                                    li.a.dropdown-item.text-danger(href="#") Chặn
+
+            // Khu vực chat chính (Chat Window)
+            .col-6
+                .chat-container.bg-light.shadow-sm
+                    .container
+                        .row
+                            .col-12
+                                +box-head("Tin nhắn", "mt-2", "mb-2")
+                        .row
+                            .col-12
+                                .chat(my-id=user.id)
+                                    .inner-body
+                                        each chat in chats
+                                            div(class=(chat.info.id == user.id ? "inner-outgoing" : "inner-incoming"))
+                                                if (chat.info.id != user.id)
+                                                    .inner-name #{chat.info.fullName} 
+                                                if (chat.content)
+                                                    .inner-content
+                                                        | #{chat.content}
+                                                if (chat.images)
+                                                    .inner-images
+                                                        each image in chat.images
+                                                            img(src=image)
+
+                                        // Typing indicator and chat preview
+                                        div(class="inner-list-typing")
+
+                                    // Preview image upload area
+                                    .inner-preview-images
+                                        div(class="custom-file-container" data-upload-id="upload-image")
+
+                                    // Message input area with emoji and image buttons
+                                    .inner-foot
+                                        form(class="inner-form" action="#")
+                                            input(type="text", placeholder="Nhập nội dung ...", name="content")
+                                            label(for="file-upload-with-preview-upload-image", class="btn btn-light mx-2 mb-0")
+                                                i.fa-regular.fa-image(style="font-size: 24px;")
+                                            span(class="button-icon btn btn-light mx-2")
+                                                i.fa-regular.fa-face-smile(style="font-size: 24px;")
+                                            button
+                                                i.fa-solid.fa-paper-plane
+
+                    // Tooltip area for emoji picker
+                    div(class="tooltip" role="tooltip")
+                        emoji-picker(class="light")
+
+                block script
+                    script(type="module" src='/js/chat.js')
+
+            // Khu vực chức năng phụ (Sidebar bên phải)
+            .col-3
+                .chat-info.p-3.bg-light.text-black(style="height: 545px")
+                    // Avatar và tên người dùng
+                    .text-center
+                        img.rounded-circle(src=user.avatar, width="70", height="70")
+                        h5.mt-2 #{user.name}
+
+                    // Thanh công cụ (Trang cá nhân, Tắt thông báo, Tìm kiếm)
+                    .d-flex.justify-content-around.mt-3
+                        .text-center
+                            i.fas.fa-user-circle(style="font-size: 20px;")
+                            p.small Trang cá n...
+                        .text-center
+                            i.fas.fa-bell-slash(style="font-size: 20px;")
+                            p.small Tắt thông báo
+                        .text-center
+                            i.fas.fa-search(style="font-size: 20px;")
+                            p.small Tìm kiếm
+
+                    hr.bg-light
+
+                    // Các mục tùy chọn
+                    .menu-options
+                        .menu-item.py-2.border-bottom.d-flex.justify-content-between.align-items-center
+                            span Thông tin về đoạn chat
+                            i.fas.fa-chevron-down
+                        .menu-item.py-2.border-bottom.d-flex.justify-content-between.align-items-center
+                            span Tùy chỉnh đoạn chat
+                            i.fas.fa-chevron-down
+                        .menu-item.py-2.border-bottom
+                            span File phương tiện, file và liên kết
+                            .nested-menu.mt-2.ps-3
+                                .d-flex.align-items-center.mb-2
+                                    i.fas.fa-image.me-2
+                                    span File phương tiện
+                                .d-flex.align-items-center.mb-2
+                                    i.fas.fa-file.me-2
+                                    span File
+                                .d-flex.align-items-center
+                                    i.fas.fa-link.me-2
+                                    span Liên kết
+                        .menu-item.py-2.border-bottom.d-flex.justify-content-between.align-items-center
+                            span Quyền riêng tư và hỗ trợ
+                            i.fas.fa-chevron-down
+
