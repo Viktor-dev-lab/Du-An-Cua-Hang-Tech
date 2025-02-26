@@ -5,58 +5,40 @@ include ../../../admin/mixins/alert.pug
 
 block main
   .chat-container
-
     include ../../partials/list-btn-users.pug
 
     .container.my-5
-      .row
-        .col-12
-            +box-head("Tin nhắn", "mt-3", "mb-3")
+      .row.justify-content-center
+        .col-md-6.p-3(style="width: 80%;")
+          h4.text-center.mb-4 Chọn bạn bè để tạo nhóm
 
-      .row
-        .col-12 
-          .chat(my-id=user.id)
-            .inner-body 
-              each chat in chats
-                div(class=(chat.info.id == user.id ? "inner-outgoing" : "inner-incoming"))
-                  if (chat.info.id != user.id)
-                    .inner-name #{chat.info.fullName} 
-                  if (chat.content)
-                    .inner-content
-                      | #{chat.content}
-                  if (chat.images)
-                    .inner-images
-                      each image in chat.images               
-                        img(src=image)
+          form(action="/chat/create" method="POST")
+            // Ô nhập tiêu đề phòng
+            .mb-3
+              label.form-label(for="roomTitle") Tiêu đề phòng
+              input#roomTitle.form-control.p-2(type="text" name="roomTitle" placeholder="Nhập tên phòng chat..." required)
 
-              div(class="inner-list-typing")
-            
-            .inner-preview-images
-              div(class="custom-file-container" data-upload-id="upload-image")
+            // Nút Submit ở trên đầu
+            .d-flex.justify-content-end.mb-3
+              button.btn.btn-primary.px-4.py-2(type="submit") Tạo nhóm
 
-            .inner-foot 
-              form(
-                  class="inner-form"
-                  action="#"
-              )
-                input(
-                    type="text"
-                    placeholder="Nhập nội dung ..."
-                    name="content"
-                )
-                
-                label(
-                  for="file-upload-with-preview-upload-image"
-                  class="btn btn-light mx-2 mb-0"
-                )
-                   i.fa-regular.fa-image(style="font-size: 24px;")
-                span(class="button-icon btn btn-light mx-2")
-                  i.fa-regular.fa-face-smile(style="font-size: 24px;")
-                button
-                  i.fa-solid.fa-paper-plane
+            // Thanh tìm kiếm bạn bè
+            .input-group.mb-3.p-2.border.rounded
+              input#searchFriends.form-control.p-2(type="text" placeholder="Tìm kiếm bạn bè...")
+              span.input-group-text.bg-light.px-3
+                i.fas.fa-search.text-muted
 
-  div(class="tooltip" role="tooltip")
-    emoji-picker(class="light")
-
-  block script
-    script(type="module" src = '/js/chat.js')
+            // Danh sách bạn bè theo chiều dọc
+            .list-group.p-3.border.rounded.shadow-sm.bg-white
+              if friendList
+                each friend in friendList
+                  .list-group-item.d-flex.align-items-center.p-3.mb-2.rounded.shadow-sm
+                    // Checkbox
+                    .form-check.me-3
+                      input.form-check-input(type="checkbox" name="friends_ID" value=friend._id)
+                    
+                    // Avatar + Thông tin bạn bè
+                    img.rounded-circle.border(src=friend.avatar width="50" height="50")
+                    .ms-3
+                      strong.d-block= friend.fullName
+                      small.text-muted Thành viên
