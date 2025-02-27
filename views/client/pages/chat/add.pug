@@ -1,0 +1,27 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-grid.pug
+include ../../../admin/mixins/alert.pug
+include ../..//mixins/list-friend.pug
+
+block main
+  .chat-container
+    include ../../partials/list-btn-users.pug
+
+    .container.my-5
+      .row.justify-content-center
+        .col-md-6.p-3(style="width: 80%;")
+          h4.text-center.mb-4 Chọn bạn bè để tạo nhóm
+
+          form(action=`/chat/add/${roomChatID}` method="POST")
+            // Nút Submit ở trên đầu
+            .d-flex.justify-content-end.mb-3
+              button.btn.btn-primary.px-4.py-2(type="submit") Tạo nhóm
+
+            // Thanh tìm kiếm bạn bè
+            .input-group.mb-3.p-2.border.rounded
+              input#searchFriends.form-control.p-2(type="text" placeholder="Tìm kiếm bạn bè...")
+              span.input-group-text.bg-light.px-3
+                i.fas.fa-search.text-muted
+
+            +list-friend(friendList, friends_ID_Group)

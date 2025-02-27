@@ -125,9 +125,9 @@ module.exports.index = async (req, res) => {
       };
 
       // Lấy danh sách thành viên
-      for (const chatUser of roomChat.users) {
+      for (const userIn_Room of roomChat.users) {
         const member = await User.findOne({
-          _id: chatUser.user_id,
+          _id: userIn_Room.user_id,
           status: "active",
           deleted: false
         }).lean();
@@ -135,13 +135,14 @@ module.exports.index = async (req, res) => {
         if (member) {
           friendInfo.members.push({
             fullName: member.fullName,
-            avatar: "https://i.pravatar.cc/40?img=" + Math.floor(Math.random() * 70)
+            avatar: "https://i.pravatar.cc/40?img=" + Math.floor(Math.random() * 70),
+            role: userIn_Room.role
           });
         }
       }
     }
   }
-  console.log(friendInfo)
+
   // Nếu không tìm thấy bạn bè, gán mặc định
   if (!friendInfo) {
     friendInfo = {
@@ -155,6 +156,11 @@ module.exports.index = async (req, res) => {
   const Size_Room = await RoomChat.findOne({_id : roomChatID, status: 'active', deleted: false});
   if (Size_Room.users.length > 2) check = true;
 
+  // Lấy danh sách tất cả Admins
+  const adminUsers = roomChat.users
+  .filter(user => user.role === "superAdmin")
+  .map(user => user.user_id);
+
   res.render("client/pages/room-chat/index.pug", {
     pageTitle: "Trang Phòng Chat",
     friends: friends,
@@ -162,6 +168,8 @@ module.exports.index = async (req, res) => {
     chats: chats,
     sizeGroup_room: check,
     members: friendInfo.members,
+    adminUsers: adminUsers,
+    roomChatID: roomChatID
   });
 
 };

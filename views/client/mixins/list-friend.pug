@@ -1,0 +1,28 @@
+mixin list-friend(friendList, friends_ID_Group)
+  - var groupMembers = Array.isArray(friends_ID_Group) ? friends_ID_Group.map(String) : [] // Đảm bảo là mảng String
+
+  // Danh sách bạn bè theo chiều dọc
+  .list-group.p-3.border.rounded.shadow-sm.bg-white
+    if friendList
+      each friend in friendList
+        - var isInGroup = groupMembers.includes(String(friend._id)) // Convert _id thành String trước khi kiểm tra
+        .list-group-item.d-flex.align-items-center.p-3.mb-2.rounded.shadow-sm
+          // Checkbox
+          .form-check.me-3
+            label.form-check-label.text-muted
+              input.form-check-input(
+                type="checkbox" 
+                name="friends_ID" 
+                value=friend._id 
+                disabled=isInGroup 
+                checked=isInGroup
+              )
+
+          // Avatar + Thông tin bạn bè
+          img.rounded-circle.border(src=friend.avatar width="50" height="50")
+          .ms-3
+            strong.d-block= friend.fullName
+            if isInGroup
+              small.text-muted (Đã trong nhóm)
+            else
+              small.text-muted Thành viên mới

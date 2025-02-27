@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/product-grid.pug
 include ../../../admin/mixins/alert.pug
+include ../..//mixins/list-friend.pug
 
 block main
   .chat-container
@@ -28,17 +29,4 @@ block main
               span.input-group-text.bg-light.px-3
                 i.fas.fa-search.text-muted
 
-            // Danh sách bạn bè theo chiều dọc
-            .list-group.p-3.border.rounded.shadow-sm.bg-white
-              if friendList
-                each friend in friendList
-                  .list-group-item.d-flex.align-items-center.p-3.mb-2.rounded.shadow-sm
-                    // Checkbox
-                    .form-check.me-3
-                      input.form-check-input(type="checkbox" name="friends_ID" value=friend._id)
-                    
-                    // Avatar + Thông tin bạn bè
-                    img.rounded-circle.border(src=friend.avatar width="50" height="50")
-                    .ms-3
-                      strong.d-block= friend.fullName
-                      small.text-muted Thành viên
+            +list-friend(friendList)
